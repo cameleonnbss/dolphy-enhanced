@@ -97,15 +97,16 @@ Debug builds are produced by CI on every push to `main` (see
 `.github/workflows/build.yml`). To cut a tagged release:
 
 ```bash
-git tag -a v2.8 -m "Dolphy Enhanced 2.8"
-git push origin v2.8
+git tag -a v2.9 -m "Dolphy Enhanced 2.9"
+git push origin v2.9
 ```
 
 Suggested release description:
 
-> **Dolphy Enhanced 2.8**
-> First-launch usage gate · Functions screen search · new adaptive icon ·
-> OUI manufacturer database (335 prefixes) · 15 languages with English as the
+> **Dolphy Enhanced 2.9**
+> AI module generator (any OpenAI-compatible endpoint, review before install) ·
+> first-launch usage gate · Functions screen search · new adaptive icon · OUI
+> manufacturer database (335 prefixes) · 15 languages with English as the
 > fallback · streaming wordlists + generated patterns · NFC/RFID card database
 > (37 families) · root detection with manager and version · README in 5
 > languages.

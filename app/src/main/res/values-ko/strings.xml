@@ -109,4 +109,19 @@
     <string name="bond_spam_title">본드 스팸</string>
     <string name="bond_spam_desc">Bluetooth Classic 페어링 요청 플러드</string>
     <string name="oui_vendor">제조사</string>
+    <string name="ai_title">AI 모듈 생성기</string>
+    <string name="ai_intro">모듈을 설명하면 OpenAI 호환 모델이 플러그인 뼈대를 작성합니다. 설치 전에 코드를 확인합니다.</string>
+    <string name="ai_provider">제공자</string>
+    <string name="ai_base_url">기본 URL</string>
+    <string name="ai_model">모델</string>
+    <string name="ai_api_key">API 키</string>
+    <string name="ai_save">제공자 저장</string>
+    <string name="ai_key_note">키는 앱 설정에만 저장되며 위 주소로만 전송됩니다.</string>
+    <string name="ai_prompt_hint">모듈이 무엇을 해야 하나요?</string>
+    <string name="ai_generate">생성</string>
+    <string name="ai_generating">생성 중…</string>
+    <string name="ai_review">설치 전에 검토</string>
+    <string name="ai_install">플러그인 설치</string>
+    <string name="ai_installed">설치됨: %1$s</string>
+    <string name="ai_saved">제공자가 저장되었습니다</string>
 </resources>

@@ -109,4 +109,19 @@ Autori e collaboratori non si assumono alcuna responsabilità per un uso impropr
     <string name="bond_spam_title">Spam Bond</string>
     <string name="bond_spam_desc">Inondazione di richieste di associazione Bluetooth Classic</string>
     <string name="oui_vendor">Produttore</string>
+    <string name="ai_title">Generatore di moduli IA</string>
+    <string name="ai_intro">Descrivi un modulo e un modello compatibile OpenAI scriverà lo scheletro del plugin. Rivedi il codice prima di installarlo.</string>
+    <string name="ai_provider">Provider</string>
+    <string name="ai_base_url">URL di base</string>
+    <string name="ai_model">Modello</string>
+    <string name="ai_api_key">Chiave API</string>
+    <string name="ai_save">Salva provider</string>
+    <string name="ai_key_note">La chiave resta nelle preferenze dell\'app e viene inviata solo all\'indirizzo sopra.</string>
+    <string name="ai_prompt_hint">Cosa deve fare il modulo?</string>
+    <string name="ai_generate">Genera</string>
+    <string name="ai_generating">Generazione…</string>
+    <string name="ai_review">Rivedi prima di installare</string>
+    <string name="ai_install">Installa plugin</string>
+    <string name="ai_installed">Installato: %1$s</string>
+    <string name="ai_saved">Provider salvato</string>
 </resources>

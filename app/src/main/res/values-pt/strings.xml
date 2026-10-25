@@ -109,4 +109,19 @@ Os autores e colaboradores não assumem qualquer responsabilidade por uso indevi
     <string name="bond_spam_title">Spam Bond</string>
     <string name="bond_spam_desc">Inundação de pedidos de emparelhamento Bluetooth Classic</string>
     <string name="oui_vendor">Fabricante</string>
+    <string name="ai_title">Gerador de módulos com IA</string>
+    <string name="ai_intro">Descreve um módulo e um modelo compatível com OpenAI escreve a estrutura do plugin. Revês o código antes de instalar.</string>
+    <string name="ai_provider">Fornecedor</string>
+    <string name="ai_base_url">URL base</string>
+    <string name="ai_model">Modelo</string>
+    <string name="ai_api_key">Chave API</string>
+    <string name="ai_save">Guardar fornecedor</string>
+    <string name="ai_key_note">A chave fica nas preferências da app e só é enviada para o endereço acima.</string>
+    <string name="ai_prompt_hint">O que deve fazer o módulo?</string>
+    <string name="ai_generate">Gerar</string>
+    <string name="ai_generating">A gerar…</string>
+    <string name="ai_review">Rever antes de instalar</string>
+    <string name="ai_install">Instalar plugin</string>
+    <string name="ai_installed">Instalado: %1$s</string>
+    <string name="ai_saved">Fornecedor guardado</string>
 </resources>

@@ -109,4 +109,19 @@
     <string name="bond_spam_title">Bond 骚扰</string>
     <string name="bond_spam_desc">蓝牙经典配对请求洪水</string>
     <string name="oui_vendor">厂商</string>
+    <string name="ai_title">AI 模块生成器</string>
+    <string name="ai_intro">描述一个模块，兼容 OpenAI 的模型会写出插件骨架。安装前你可以先查看代码。</string>
+    <string name="ai_provider">服务商</string>
+    <string name="ai_base_url">基础 URL</string>
+    <string name="ai_model">模型</string>
+    <string name="ai_api_key">API 密钥</string>
+    <string name="ai_save">保存服务商</string>
+    <string name="ai_key_note">密钥只保存在应用设置中，并且只发送到上面的地址。</string>
+    <string name="ai_prompt_hint">这个模块要做什么？</string>
+    <string name="ai_generate">生成</string>
+    <string name="ai_generating">正在生成…</string>
+    <string name="ai_review">安装前请检查</string>
+    <string name="ai_install">安装插件</string>
+    <string name="ai_installed">已安装：%1$s</string>
+    <string name="ai_saved">服务商已保存</string>
 </resources>

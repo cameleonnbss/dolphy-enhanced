@@ -128,6 +128,21 @@ EN_EXTRA = {
     "bond_spam_title": "Bond Spam",
     "bond_spam_desc": "Bluetooth Classic pairing flood",
     "oui_vendor": "Manufacturer",
+    "ai_title": "AI module generator",
+    "ai_intro": "Describe a module and let an OpenAI-compatible model write the plugin scaffold. You review the code before it is installed.",
+    "ai_provider": "Provider",
+    "ai_base_url": "Base URL",
+    "ai_model": "Model",
+    "ai_api_key": "API key",
+    "ai_save": "Save provider",
+    "ai_key_note": "The key is stored locally in this app's preferences and sent only to the endpoint above.",
+    "ai_prompt_hint": "What should the module do?",
+    "ai_generate": "Generate",
+    "ai_generating": "Generating\u2026",
+    "ai_review": "Review before installing",
+    "ai_install": "Install plugin",
+    "ai_installed": "Installed: %1$s",
+    "ai_saved": "Provider saved",
 }
 
 # ---------------------------------------------------------------------------
@@ -186,6 +201,21 @@ RU_EXTRA = {
     "bond_spam_title": "Bond Спам",
     "bond_spam_desc": "Флуд запросами сопряжения Bluetooth Classic",
     "oui_vendor": "Производитель",
+    "ai_title": "Генератор модулей с ИИ",
+    "ai_intro": "Опишите модуль — совместимая с OpenAI модель напишет заготовку плагина. Код можно просмотреть до установки.",
+    "ai_provider": "Провайдер",
+    "ai_base_url": "Базовый URL",
+    "ai_model": "Модель",
+    "ai_api_key": "Ключ API",
+    "ai_save": "Сохранить провайдера",
+    "ai_key_note": "Ключ хранится локально в настройках приложения и отправляется только на указанный адрес.",
+    "ai_prompt_hint": "Что должен делать модуль?",
+    "ai_generate": "Сгенерировать",
+    "ai_generating": "Генерация\u2026",
+    "ai_review": "Проверьте перед установкой",
+    "ai_install": "Установить плагин",
+    "ai_installed": "Установлено: %1$s",
+    "ai_saved": "Провайдер сохранён",
 }
 
 
@@ -212,10 +242,15 @@ def parse(path: Path) -> tuple[list[str], dict[str, str], str]:
     return order, values, text
 
 
+def escape_apostrophes(value: str) -> str:
+    """aapt2 rejects an unescaped ' inside <string>, so escape the bare ones."""
+    return re.sub(r"(?<!\\)'", r"\\'", value)
+
+
 def write(path: Path, order: list[str], values: dict[str, str], header: str) -> None:
     lines = ['<?xml version="1.0" encoding="utf-8"?>', header, "<resources>"]
     for key in order:
-        lines.append(f'    <string name="{key}">{values[key]}</string>')
+        lines.append(f'    <string name="{key}">{escape_apostrophes(values[key])}</string>')
     lines.append("</resources>")
     lines.append("")
     path.write_text("\n".join(lines), encoding="utf-8")

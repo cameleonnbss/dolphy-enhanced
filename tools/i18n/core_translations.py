@@ -1479,3 +1479,133 @@ _VENDOR = {
 for _tag, _value in _VENDOR.items():
     TRANSLATIONS[_tag]["oui_vendor"] = _value
 CORE_KEYS += ["oui_vendor"]
+
+# ---------------------------------------------------------------------------
+# AI module generator screen.
+# ---------------------------------------------------------------------------
+_AI_KEYS = [
+    "ai_title", "ai_intro", "ai_provider", "ai_base_url", "ai_model", "ai_api_key",
+    "ai_save", "ai_key_note", "ai_prompt_hint", "ai_generate", "ai_generating",
+    "ai_review", "ai_install", "ai_installed", "ai_saved",
+]
+
+_AI: dict[str, tuple[str, ...]] = {
+    "fr": (
+        "Générateur de modules IA",
+        "Décrivez un module : un modèle compatible OpenAI écrit la structure du plugin. Vous relisez le code avant l'installation.",
+        "Fournisseur", "URL de base", "Modèle", "Clé API", "Enregistrer le fournisseur",
+        "La clé reste dans les préférences de l'application et n'est envoyée qu'à l'adresse ci-dessus.",
+        "Que doit faire le module ?", "Générer", "Génération…",
+        "Relire avant d'installer", "Installer le plugin", "Installé : %1$s", "Fournisseur enregistré",
+    ),
+    "es": (
+        "Generador de módulos con IA",
+        "Describe un módulo y un modelo compatible con OpenAI escribirá el esqueleto del plugin. Revisas el código antes de instalarlo.",
+        "Proveedor", "URL base", "Modelo", "Clave API", "Guardar proveedor",
+        "La clave se guarda en las preferencias de la app y solo se envía a la dirección anterior.",
+        "¿Qué debe hacer el módulo?", "Generar", "Generando…",
+        "Revisa antes de instalar", "Instalar plugin", "Instalado: %1$s", "Proveedor guardado",
+    ),
+    "de": (
+        "KI-Modulgenerator",
+        "Beschreibe ein Modul, ein OpenAI-kompatibles Modell schreibt das Plugin-Gerüst. Der Code wird vor der Installation angezeigt.",
+        "Anbieter", "Basis-URL", "Modell", "API-Schlüssel", "Anbieter speichern",
+        "Der Schlüssel liegt nur in den App-Einstellungen und geht ausschließlich an die obige Adresse.",
+        "Was soll das Modul tun?", "Generieren", "Wird generiert…",
+        "Vor der Installation prüfen", "Plugin installieren", "Installiert: %1$s", "Anbieter gespeichert",
+    ),
+    "it": (
+        "Generatore di moduli IA",
+        "Descrivi un modulo e un modello compatibile OpenAI scriverà lo scheletro del plugin. Rivedi il codice prima di installarlo.",
+        "Provider", "URL di base", "Modello", "Chiave API", "Salva provider",
+        "La chiave resta nelle preferenze dell'app e viene inviata solo all'indirizzo sopra.",
+        "Cosa deve fare il modulo?", "Genera", "Generazione…",
+        "Rivedi prima di installare", "Installa plugin", "Installato: %1$s", "Provider salvato",
+    ),
+    "pt": (
+        "Gerador de módulos com IA",
+        "Descreve um módulo e um modelo compatível com OpenAI escreve a estrutura do plugin. Revês o código antes de instalar.",
+        "Fornecedor", "URL base", "Modelo", "Chave API", "Guardar fornecedor",
+        "A chave fica nas preferências da app e só é enviada para o endereço acima.",
+        "O que deve fazer o módulo?", "Gerar", "A gerar…",
+        "Rever antes de instalar", "Instalar plugin", "Instalado: %1$s", "Fornecedor guardado",
+    ),
+    "tr": (
+        "Yapay zekâ modül üreteci",
+        "Modülü tarif edin, OpenAI uyumlu bir model eklenti iskeletini yazsın. Kodu kurmadan önce incelersiniz.",
+        "Sağlayıcı", "Temel URL", "Model", "API anahtarı", "Sağlayıcıyı kaydet",
+        "Anahtar yalnızca uygulama tercihlerinde tutulur ve sadece yukarıdaki adrese gönderilir.",
+        "Modül ne yapmalı?", "Üret", "Üretiliyor…",
+        "Kurmadan önce inceleyin", "Eklentiyi kur", "Kuruldu: %1$s", "Sağlayıcı kaydedildi",
+    ),
+    "uk": (
+        "Генератор модулів зі ШІ",
+        "Опишіть модуль — сумісна з OpenAI модель напише заготовку плагіна. Код можна переглянути до встановлення.",
+        "Провайдер", "Базовий URL", "Модель", "Ключ API", "Зберегти провайдера",
+        "Ключ зберігається в налаштуваннях застосунку і надсилається лише на вказану адресу.",
+        "Що має робити модуль?", "Згенерувати", "Генерація…",
+        "Перегляньте перед встановленням", "Встановити плагін", "Встановлено: %1$s", "Провайдера збережено",
+    ),
+    "pl": (
+        "Generator modułów AI",
+        "Opisz moduł, a model zgodny z OpenAI napisze szkielet wtyczki. Kod sprawdzasz przed instalacją.",
+        "Dostawca", "Bazowy URL", "Model", "Klucz API", "Zapisz dostawcę",
+        "Klucz jest przechowywany w ustawieniach aplikacji i wysyłany tylko pod powyższy adres.",
+        "Co ma robić moduł?", "Wygeneruj", "Generowanie…",
+        "Sprawdź przed instalacją", "Zainstaluj wtyczkę", "Zainstalowano: %1$s", "Dostawca zapisany",
+    ),
+    "ar": (
+        "مولّد الوحدات بالذكاء الاصطناعي",
+        "صف الوحدة وسيكتب نموذج متوافق مع OpenAI هيكل الإضافة. تراجع الكود قبل التثبيت.",
+        "المزوّد", "الرابط الأساسي", "النموذج", "مفتاح API", "حفظ المزوّد",
+        "يبقى المفتاح في إعدادات التطبيق ويُرسل فقط إلى العنوان أعلاه.",
+        "ماذا يجب أن تفعل الوحدة؟", "توليد", "جارٍ التوليد…",
+        "راجع قبل التثبيت", "تثبيت الإضافة", "تم التثبيت: %1$s", "تم حفظ المزوّد",
+    ),
+    "hi": (
+        "AI मॉड्यूल जनरेटर",
+        "मॉड्यूल का वर्णन करें, OpenAI-संगत मॉडल प्लगइन का ढाँचा लिखेगा। इंस्टॉल से पहले आप कोड देखते हैं।",
+        "प्रदाता", "बेस URL", "मॉडल", "API कुंजी", "प्रदाता सहेजें",
+        "कुंजी केवल ऐप की सेटिंग्स में रहती है और सिर्फ़ ऊपर दिए पते पर भेजी जाती है।",
+        "मॉड्यूल को क्या करना चाहिए?", "जनरेट करें", "जनरेट हो रहा है…",
+        "इंस्टॉल से पहले देखें", "प्लगइन इंस्टॉल करें", "इंस्टॉल हुआ: %1$s", "प्रदाता सहेजा गया",
+    ),
+    "id": (
+        "Generator modul AI",
+        "Jelaskan modul dan model yang kompatibel dengan OpenAI akan menulis kerangka plugin. Kamu meninjau kode sebelum dipasang.",
+        "Penyedia", "URL dasar", "Model", "Kunci API", "Simpan penyedia",
+        "Kunci disimpan di preferensi aplikasi dan hanya dikirim ke alamat di atas.",
+        "Apa yang harus dilakukan modul?", "Buat", "Membuat…",
+        "Tinjau sebelum memasang", "Pasang plugin", "Terpasang: %1$s", "Penyedia disimpan",
+    ),
+    "zh": (
+        "AI 模块生成器",
+        "描述一个模块，兼容 OpenAI 的模型会写出插件骨架。安装前你可以先查看代码。",
+        "服务商", "基础 URL", "模型", "API 密钥", "保存服务商",
+        "密钥只保存在应用设置中，并且只发送到上面的地址。",
+        "这个模块要做什么？", "生成", "正在生成…",
+        "安装前请检查", "安装插件", "已安装：%1$s", "服务商已保存",
+    ),
+    "ja": (
+        "AI モジュール生成",
+        "モジュールを説明すると、OpenAI 互換モデルがプラグインの雛形を書きます。インストール前にコードを確認できます。",
+        "プロバイダー", "ベース URL", "モデル", "API キー", "プロバイダーを保存",
+        "キーはアプリの設定にのみ保存され、上記のアドレスにだけ送信されます。",
+        "モジュールは何をしますか？", "生成", "生成中…",
+        "インストール前に確認", "プラグインをインストール", "インストール済み: %1$s", "プロバイダーを保存しました",
+    ),
+    "ko": (
+        "AI 모듈 생성기",
+        "모듈을 설명하면 OpenAI 호환 모델이 플러그인 뼈대를 작성합니다. 설치 전에 코드를 확인합니다.",
+        "제공자", "기본 URL", "모델", "API 키", "제공자 저장",
+        "키는 앱 설정에만 저장되며 위 주소로만 전송됩니다.",
+        "모듈이 무엇을 해야 하나요?", "생성", "생성 중…",
+        "설치 전에 검토", "플러그인 설치", "설치됨: %1$s", "제공자가 저장되었습니다",
+    ),
+}
+
+for _tag, _values in _AI.items():
+    for _key, _value in zip(_AI_KEYS, _values):
+        TRANSLATIONS[_tag][_key] = _value
+
+CORE_KEYS += _AI_KEYS

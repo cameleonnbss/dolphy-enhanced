@@ -109,4 +109,19 @@ Autoren und Mitwirkende übernehmen keine Verantwortung für Missbrauch. Mit dem
     <string name="bond_spam_title">Bond-Spam</string>
     <string name="bond_spam_desc">Flood von Bluetooth-Classic-Kopplungsanfragen</string>
     <string name="oui_vendor">Hersteller</string>
+    <string name="ai_title">KI-Modulgenerator</string>
+    <string name="ai_intro">Beschreibe ein Modul, ein OpenAI-kompatibles Modell schreibt das Plugin-Gerüst. Der Code wird vor der Installation angezeigt.</string>
+    <string name="ai_provider">Anbieter</string>
+    <string name="ai_base_url">Basis-URL</string>
+    <string name="ai_model">Modell</string>
+    <string name="ai_api_key">API-Schlüssel</string>
+    <string name="ai_save">Anbieter speichern</string>
+    <string name="ai_key_note">Der Schlüssel liegt nur in den App-Einstellungen und geht ausschließlich an die obige Adresse.</string>
+    <string name="ai_prompt_hint">Was soll das Modul tun?</string>
+    <string name="ai_generate">Generieren</string>
+    <string name="ai_generating">Wird generiert…</string>
+    <string name="ai_review">Vor der Installation prüfen</string>
+    <string name="ai_install">Plugin installieren</string>
+    <string name="ai_installed">Installiert: %1$s</string>
+    <string name="ai_saved">Anbieter gespeichert</string>
 </resources>

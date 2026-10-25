@@ -109,4 +109,19 @@ Autorzy i współtwórcy nie ponoszą odpowiedzialności za nadużycia. Kontynuu
     <string name="bond_spam_title">Spam Bond</string>
     <string name="bond_spam_desc">Zalew żądaniami parowania Bluetooth Classic</string>
     <string name="oui_vendor">Producent</string>
+    <string name="ai_title">Generator modułów AI</string>
+    <string name="ai_intro">Opisz moduł, a model zgodny z OpenAI napisze szkielet wtyczki. Kod sprawdzasz przed instalacją.</string>
+    <string name="ai_provider">Dostawca</string>
+    <string name="ai_base_url">Bazowy URL</string>
+    <string name="ai_model">Model</string>
+    <string name="ai_api_key">Klucz API</string>
+    <string name="ai_save">Zapisz dostawcę</string>
+    <string name="ai_key_note">Klucz jest przechowywany w ustawieniach aplikacji i wysyłany tylko pod powyższy adres.</string>
+    <string name="ai_prompt_hint">Co ma robić moduł?</string>
+    <string name="ai_generate">Wygeneruj</string>
+    <string name="ai_generating">Generowanie…</string>
+    <string name="ai_review">Sprawdź przed instalacją</string>
+    <string name="ai_install">Zainstaluj wtyczkę</string>
+    <string name="ai_installed">Zainstalowano: %1$s</string>
+    <string name="ai_saved">Dostawca zapisany</string>
 </resources>

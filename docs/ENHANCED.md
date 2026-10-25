@@ -1,6 +1,28 @@
-# Dolphy Enhanced — 2.8
+# Dolphy Enhanced — 2.9
 
-`versionCode 28` · `versionName 2.8-enhanced` · based on Dolphy 2.6 (GPL v3)
+`versionCode 29` · `versionName 2.9-enhanced` · based on Dolphy 2.6 (GPL v3)
+
+## 2.9 additions
+
+### AI module generator
+`plugin/ai/AiModuleProvider.kt` + `plugin/ai/AiModuleScreen.kt`.
+
+Any OpenAI-compatible endpoint works — OpenRouter, Groq, Together, a local
+Ollama/llama.cpp with `/v1` compatibility. You fill in base URL, model and API
+key; the key stays in the app's preferences and is sent **only** to that address.
+The app makes no request until you press Generate.
+
+The flow is deliberately three steps: describe → generate → **review the code on
+screen** → install. Generated plugins are executable Python with the permissions
+they declare, so installation is gated behind the preview, then handed to the
+existing `PluginManager.installFromFile` path (same validation as a downloaded
+plugin).
+
+### Documentation scope
+The roadmap no longer carries an editorial list of what the fork refuses to do —
+it is your repository. What remains is the first-launch consent screen and a
+one-paragraph scope note, which is what actually protects you if the APK is
+redistributed.
 
 ## 2.8 additions
 
@@ -89,21 +111,6 @@ address instead of leaving the user to guess who made the radio.
 - `.github/workflows/build.yml` builds a debug APK on every push.
 
 ---
-
-## Deliberately not implemented
-
-Three requests were left out because they are not "enhancements", they are
-attacks on other people:
-
-| Request | Why not |
-|---|---|
-| DDoS / jam a mobile network or a nearby device "until it stops working" | Radio and network DoS against third parties is illegal in essentially every jurisdiction and causes real harm. The app already ships its own lab modules; no new disruption capability was added. |
-| Hijack the Bluetooth of people around you to see what they see | That is unauthorised interception of third-party communications. |
-| Bundling exploits that attack strangers' devices | Same reason. |
-
-What *is* in the build: identification, documentation and lab tooling — knowing
-what a card is, whether a chip is clonable in principle, what your own network
-exposes, and a wordlist engine that does not crash.
 
 ## Roadmap (next)
 

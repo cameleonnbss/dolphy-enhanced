@@ -11,8 +11,9 @@ package com.droid.dolphy
 object About {
     /** Change these two constants if the handle or URL differs. */
     const val AUTHOR = "camzzz"
-    const val AUTHOR_GITHUB = "https://github.com/camzzz"
+    const val AUTHOR_GITHUB = "https://github.com/cameleonnbss"
 
     const val UPSTREAM_GITHUB = "https://github.com/unvoiddd/Dolphy-App"
+    const val REPO_GITHUB = "https://github.com/cameleonnbss/dolphy-enhanced"
     const val LICENCE = "GNU GPL v3"
 }

@@ -109,4 +109,19 @@ Yazarlar ve katkıcılar kötüye kullanımdan sorumlu tutulamaz. Devam ederek r
     <string name="bond_spam_title">Bond Spam</string>
     <string name="bond_spam_desc">Bluetooth Classic eşleştirme isteği seli</string>
     <string name="oui_vendor">Üretici</string>
+    <string name="ai_title">Yapay zekâ modül üreteci</string>
+    <string name="ai_intro">Modülü tarif edin, OpenAI uyumlu bir model eklenti iskeletini yazsın. Kodu kurmadan önce incelersiniz.</string>
+    <string name="ai_provider">Sağlayıcı</string>
+    <string name="ai_base_url">Temel URL</string>
+    <string name="ai_model">Model</string>
+    <string name="ai_api_key">API anahtarı</string>
+    <string name="ai_save">Sağlayıcıyı kaydet</string>
+    <string name="ai_key_note">Anahtar yalnızca uygulama tercihlerinde tutulur ve sadece yukarıdaki adrese gönderilir.</string>
+    <string name="ai_prompt_hint">Modül ne yapmalı?</string>
+    <string name="ai_generate">Üret</string>
+    <string name="ai_generating">Üretiliyor…</string>
+    <string name="ai_review">Kurmadan önce inceleyin</string>
+    <string name="ai_install">Eklentiyi kur</string>
+    <string name="ai_installed">Kuruldu: %1$s</string>
+    <string name="ai_saved">Sağlayıcı kaydedildi</string>
 </resources>

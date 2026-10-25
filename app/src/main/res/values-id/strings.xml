@@ -109,4 +109,19 @@ Penulis dan kontributor tidak bertanggung jawab atas penyalahgunaan. Dengan mela
     <string name="bond_spam_title">Spam Bond</string>
     <string name="bond_spam_desc">Banjir permintaan penyambungan Bluetooth Classic</string>
     <string name="oui_vendor">Produsen</string>
+    <string name="ai_title">Generator modul AI</string>
+    <string name="ai_intro">Jelaskan modul dan model yang kompatibel dengan OpenAI akan menulis kerangka plugin. Kamu meninjau kode sebelum dipasang.</string>
+    <string name="ai_provider">Penyedia</string>
+    <string name="ai_base_url">URL dasar</string>
+    <string name="ai_model">Model</string>
+    <string name="ai_api_key">Kunci API</string>
+    <string name="ai_save">Simpan penyedia</string>
+    <string name="ai_key_note">Kunci disimpan di preferensi aplikasi dan hanya dikirim ke alamat di atas.</string>
+    <string name="ai_prompt_hint">Apa yang harus dilakukan modul?</string>
+    <string name="ai_generate">Buat</string>
+    <string name="ai_generating">Membuat…</string>
+    <string name="ai_review">Tinjau sebelum memasang</string>
+    <string name="ai_install">Pasang plugin</string>
+    <string name="ai_installed">Terpasang: %1$s</string>
+    <string name="ai_saved">Penyedia disimpan</string>
 </resources>

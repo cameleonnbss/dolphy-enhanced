@@ -109,4 +109,19 @@
     <string name="bond_spam_title">سبام Bond</string>
     <string name="bond_spam_desc">إغراق طلبات اقتران Bluetooth Classic</string>
     <string name="oui_vendor">الشركة المصنعة</string>
+    <string name="ai_title">مولّد الوحدات بالذكاء الاصطناعي</string>
+    <string name="ai_intro">صف الوحدة وسيكتب نموذج متوافق مع OpenAI هيكل الإضافة. تراجع الكود قبل التثبيت.</string>
+    <string name="ai_provider">المزوّد</string>
+    <string name="ai_base_url">الرابط الأساسي</string>
+    <string name="ai_model">النموذج</string>
+    <string name="ai_api_key">مفتاح API</string>
+    <string name="ai_save">حفظ المزوّد</string>
+    <string name="ai_key_note">يبقى المفتاح في إعدادات التطبيق ويُرسل فقط إلى العنوان أعلاه.</string>
+    <string name="ai_prompt_hint">ماذا يجب أن تفعل الوحدة؟</string>
+    <string name="ai_generate">توليد</string>
+    <string name="ai_generating">جارٍ التوليد…</string>
+    <string name="ai_review">راجع قبل التثبيت</string>
+    <string name="ai_install">تثبيت الإضافة</string>
+    <string name="ai_installed">تم التثبيت: %1$s</string>
+    <string name="ai_saved">تم حفظ المزوّد</string>
 </resources>

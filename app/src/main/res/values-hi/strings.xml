@@ -109,4 +109,19 @@
     <string name="bond_spam_title">बॉन्ड स्पैम</string>
     <string name="bond_spam_desc">Bluetooth Classic पेयरिंग फ्लड</string>
     <string name="oui_vendor">निर्माता</string>
+    <string name="ai_title">AI मॉड्यूल जनरेटर</string>
+    <string name="ai_intro">मॉड्यूल का वर्णन करें, OpenAI-संगत मॉडल प्लगइन का ढाँचा लिखेगा। इंस्टॉल से पहले आप कोड देखते हैं।</string>
+    <string name="ai_provider">प्रदाता</string>
+    <string name="ai_base_url">बेस URL</string>
+    <string name="ai_model">मॉडल</string>
+    <string name="ai_api_key">API कुंजी</string>
+    <string name="ai_save">प्रदाता सहेजें</string>
+    <string name="ai_key_note">कुंजी केवल ऐप की सेटिंग्स में रहती है और सिर्फ़ ऊपर दिए पते पर भेजी जाती है।</string>
+    <string name="ai_prompt_hint">मॉड्यूल को क्या करना चाहिए?</string>
+    <string name="ai_generate">जनरेट करें</string>
+    <string name="ai_generating">जनरेट हो रहा है…</string>
+    <string name="ai_review">इंस्टॉल से पहले देखें</string>
+    <string name="ai_install">प्लगइन इंस्टॉल करें</string>
+    <string name="ai_installed">इंस्टॉल हुआ: %1$s</string>
+    <string name="ai_saved">प्रदाता सहेजा गया</string>
 </resources>

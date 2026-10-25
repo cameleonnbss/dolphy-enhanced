@@ -1140,4 +1140,19 @@
     <string name="ble_spam_desc">Спам запросами сопряжения Apple, Android, Windows и Samsung</string>
     <string name="bond_spam_desc">Флуд запросами сопряжения Bluetooth Classic</string>
     <string name="oui_vendor">Производитель</string>
+    <string name="ai_title">Генератор модулей с ИИ</string>
+    <string name="ai_intro">Опишите модуль — совместимая с OpenAI модель напишет заготовку плагина. Код можно просмотреть до установки.</string>
+    <string name="ai_provider">Провайдер</string>
+    <string name="ai_base_url">Базовый URL</string>
+    <string name="ai_model">Модель</string>
+    <string name="ai_api_key">Ключ API</string>
+    <string name="ai_save">Сохранить провайдера</string>
+    <string name="ai_key_note">Ключ хранится локально в настройках приложения и отправляется только на указанный адрес.</string>
+    <string name="ai_prompt_hint">Что должен делать модуль?</string>
+    <string name="ai_generate">Сгенерировать</string>
+    <string name="ai_generating">Генерация…</string>
+    <string name="ai_review">Проверьте перед установкой</string>
+    <string name="ai_install">Установить плагин</string>
+    <string name="ai_installed">Установлено: %1$s</string>
+    <string name="ai_saved">Провайдер сохранён</string>
 </resources>

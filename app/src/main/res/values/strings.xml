@@ -1140,4 +1140,19 @@ The authors and contributors accept no responsibility for misuse. By continuing 
     <string name="ble_spam_desc">Pairing-request spam for Apple, Android, Windows and Samsung</string>
     <string name="bond_spam_desc">Bluetooth Classic pairing flood</string>
     <string name="oui_vendor">Manufacturer</string>
+    <string name="ai_title">AI module generator</string>
+    <string name="ai_intro">Describe a module and let an OpenAI-compatible model write the plugin scaffold. You review the code before it is installed.</string>
+    <string name="ai_provider">Provider</string>
+    <string name="ai_base_url">Base URL</string>
+    <string name="ai_model">Model</string>
+    <string name="ai_api_key">API key</string>
+    <string name="ai_save">Save provider</string>
+    <string name="ai_key_note">The key is stored locally in this app\'s preferences and sent only to the endpoint above.</string>
+    <string name="ai_prompt_hint">What should the module do?</string>
+    <string name="ai_generate">Generate</string>
+    <string name="ai_generating">Generating…</string>
+    <string name="ai_review">Review before installing</string>
+    <string name="ai_install">Install plugin</string>
+    <string name="ai_installed">Installed: %1$s</string>
+    <string name="ai_saved">Provider saved</string>
 </resources>

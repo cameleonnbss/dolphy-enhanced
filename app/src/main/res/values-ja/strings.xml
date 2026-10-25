@@ -109,4 +109,19 @@
     <string name="bond_spam_title">ボンド スパム</string>
     <string name="bond_spam_desc">Bluetooth Classic ペアリング要求フラッド</string>
     <string name="oui_vendor">メーカー</string>
+    <string name="ai_title">AI モジュール生成</string>
+    <string name="ai_intro">モジュールを説明すると、OpenAI 互換モデルがプラグインの雛形を書きます。インストール前にコードを確認できます。</string>
+    <string name="ai_provider">プロバイダー</string>
+    <string name="ai_base_url">ベース URL</string>
+    <string name="ai_model">モデル</string>
+    <string name="ai_api_key">API キー</string>
+    <string name="ai_save">プロバイダーを保存</string>
+    <string name="ai_key_note">キーはアプリの設定にのみ保存され、上記のアドレスにだけ送信されます。</string>
+    <string name="ai_prompt_hint">モジュールは何をしますか？</string>
+    <string name="ai_generate">生成</string>
+    <string name="ai_generating">生成中…</string>
+    <string name="ai_review">インストール前に確認</string>
+    <string name="ai_install">プラグインをインストール</string>
+    <string name="ai_installed">インストール済み: %1$s</string>
+    <string name="ai_saved">プロバイダーを保存しました</string>
 </resources>

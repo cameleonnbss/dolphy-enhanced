@@ -46,24 +46,9 @@ run it against hardware you own or are contracted to test.
 | 19 | Baseline profile + R8 rules for release builds (startup time) |
 | 20 | Screenshot-friendly light theme pass: contrast audit on every screen |
 
-## Out of scope, permanently
+## Scope
 
-These are not roadmap items. They are requests to attack third parties, and
-they will not be implemented:
-
-- **Jamming / DoS against a mobile network, a router, or any device you do not
-  own.** Radio interference and network disruption are illegal in essentially
-  every jurisdiction and affect bystanders who cannot consent.
-- **Hijacking or intercepting the Bluetooth of people nearby** ("see what they
-  are seeing", capture their audio, pair their earbuds to your phone without
-  their knowledge). That is unauthorised interception of third-party
-  communications.
-- **Bundling exploits that target strangers' devices.**
-
-What this project *is*: identification, documentation, and lab tooling. Knowing
-what a card is, whether a chip is clonable in principle, what your own network
-exposes, how a protocol behaves — all of that is legitimate and is what the
-modules are for.
-
-The distinction is not squeamishness, it is what makes the app safe to publish,
-safe to install, and safe to link to a GitHub profile with your name on it.
+Dolphy Enhanced is distributed under GPL v3 and gated by a first-launch consent
+screen: modules are meant for equipment you own or are explicitly authorised to
+test. Keep that gate in place if you fork this further — it is the only thing
+standing between "research tool" and "liability".

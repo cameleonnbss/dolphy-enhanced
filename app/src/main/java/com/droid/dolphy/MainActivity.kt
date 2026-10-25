@@ -98,7 +98,9 @@ import com.droid.dolphy.network.LanScannerScreen
 import com.droid.dolphy.network.LanToolsScreen
 import com.droid.dolphy.network.MyCamScreen
 import com.droid.dolphy.network.NetworkDiagnosticHubScreen
+import com.droid.dolphy.plugin.ai.AiModuleScreen
 import com.droid.dolphy.nfc.NfcViewModel
+import com.droid.dolphy.plugin.ai.AiModuleScreen
 import com.droid.dolphy.nfc.NfcViewModelFactory
 import com.droid.dolphy.nfc.ui.*
 import com.droid.dolphy.plugin.ui.PluginHostScreen
@@ -1161,6 +1163,7 @@ fun MainScaffold(
             composable("nfc_tools") { NfcToolsScreen(screenNavController) }
             composable("other/nfc_tools") { NfcToolsScreen(screenNavController) }
             composable("other/card_database") { CardCatalogScreen(screenNavController) }
+            composable("other/ai_module") { AiModuleScreen(screenNavController) }
             composable("nfc_erase") { NfcEraseScreen(screenNavController, nfcViewModel) }
             composable("other/nfc_erase") { NfcEraseScreen(screenNavController, nfcViewModel) }
             composable("nfc_write_menu") { NfcWriteMenuScreen(screenNavController, nfcViewModel) }

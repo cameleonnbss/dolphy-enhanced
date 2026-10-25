@@ -62,6 +62,8 @@ fun functionDestinationSections(): List<Pair<String, List<FunctionDestination>>>
     val lanDesc = stringResource(R.string.lan_tools_subtitle)
     val cardDbTitle = stringResource(R.string.card_db_title)
     val cardDbDesc = stringResource(R.string.card_db_desc)
+    val aiTitle = stringResource(R.string.ai_title)
+    val aiDesc = stringResource(R.string.ai_intro)
     val bleSpamTitle = stringResource(R.string.ble_spam_title)
     val bleSpamDesc = stringResource(R.string.ble_spam_desc)
     val bondSpamTitle = stringResource(R.string.bond_spam_title)
@@ -119,6 +121,13 @@ fun functionDestinationSections(): List<Pair<String, List<FunctionDestination>>>
                 cardDbTitle,
                 cardDbDesc,
                 "other/card_database",
+                OtherSections.OTHER,
+            ),
+            FunctionDestination(
+                Icons.Default.AutoAwesome,
+                aiTitle,
+                aiDesc,
+                "other/ai_module",
                 OtherSections.OTHER,
             ),
             FunctionDestination(Icons.Default.QrCodeScanner, qrTitle, qrDesc, "other/qr_tools", OtherSections.OTHER),
