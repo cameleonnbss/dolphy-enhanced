@@ -55,11 +55,11 @@ minute and bounded by a timeout, so a denied Magisk prompt cannot hang the UI.
 ## Build
 
 ```bash
-# Linux / macOS
-./gradlew assembleDebug
-
 # Windows
 gradlew.bat assembleDebug
+
+# Linux / macOS (no wrapper script in this repo — use a local Gradle 8.11+)
+gradle assembleDebug
 ```
 
 Requires JDK 17+ and Android SDK 36. The output APK lands in
