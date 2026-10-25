@@ -172,33 +172,54 @@ private data class HubLanHost(
     val isSelf: Boolean = false,
 )
 
-private const val STOCK_GROUP_NAME = "Стоковые пароли"
-
 @Serializable
 private data class PasswordGroupDto(
     val name: String,
-    val passwords: List<String>,
-    val selected: Boolean
+    val passwords: List<String> = emptyList(),
+    val selected: Boolean = true,
+    /** Set for imported lists that live on disk instead of in this DTO. */
+    val wordlistId: String? = null,
 )
 
-private class PasswordGroup(val name: String) {
+/**
+ * One selectable password list.
+ *
+ * Small lists (the bundled pack) stay in memory. Imported files are streamed
+ * from [WordlistStore] so a multi-million-line wordlist never has to fit in RAM
+ * or in SharedPreferences.
+ */
+private class PasswordGroup(
+    val name: String,
+    val wordlistId: String? = null,
+    initial: List<String> = emptyList(),
+) {
     var selected by mutableStateOf(true)
-    val passwords = mutableListOf<String>()
-    val isImported: Boolean get() = name != STOCK_GROUP_NAME
+    var count by mutableStateOf(initial.size)
+        private set
+    var validCount by mutableStateOf(initial.count { it.length >= 8 })
+        private set
 
-    fun allPasswords(): List<String> = passwords.toList()
-}
+    private val inMemory = initial.toMutableList()
 
-private fun getFileName(context: android.content.Context, uri: android.net.Uri): String {
-    var name = "Imported"
-    val cursor = context.contentResolver.query(uri, null, null, null, null)
-    cursor?.use {
-        if (it.moveToFirst()) {
-            val idx = it.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
-            if (idx >= 0) name = it.getString(idx) ?: "Imported"
+    val isImported: Boolean get() = wordlistId != null
+
+    fun passwords(store: WordlistStore): Sequence<String> =
+        wordlistId?.let { store.sequence(it) } ?: inMemory.asSequence()
+
+    /** Only the small, in-memory lists are worth persisting verbatim. */
+    fun snapshot(): List<String> = if (wordlistId == null) inMemory.toList() else emptyList()
+
+    companion object {
+        fun imported(entry: WordlistStore.Entry) = PasswordGroup(entry.title, entry.id).apply {
+            count = entry.count
+            validCount = entry.count
+        }
+
+        fun builtin(name: String, store: WordlistStore, packId: String): PasswordGroup {
+            val lines = store.bundledSequence(packId).toList()
+            return PasswordGroup(name, null, lines)
         }
     }
-    return name.substringBeforeLast(".").ifBlank { "Imported" }
 }
 
 @Composable
@@ -284,25 +305,43 @@ fun NetworkDiagnosticHubScreen(navController: NavController) {
     var selectedTargetLabel by remember { mutableStateOf("") }
 
     val prefs = remember { context.getSharedPreferences("wifi_passwords", Context.MODE_PRIVATE) }
+    val wordlistStore = remember { WordlistStore(context) }
+    val stockGroupName = stringResource(R.string.wordlist_common_title)
+    val generatedGroupName = stringResource(R.string.wordlist_generated_title)
+
+    fun generatedEntry() = WordlistStore.Entry(
+        id = WordlistStore.GENERATED_ID,
+        title = generatedGroupName,
+        count = WordlistGenerator.recipes.sumOf { it.limit },
+        builtin = true,
+    )
 
     fun saveGroups(groups: List<PasswordGroup>) {
-        val dtos = groups.map { PasswordGroupDto(it.name, it.passwords, it.selected) }
+        val dtos = groups.map { PasswordGroupDto(it.name, it.snapshot(), it.selected, it.wordlistId) }
         try {
-            val json = Json.encodeToString(dtos)
-            prefs.edit().putString("groups", json).apply()
+            prefs.edit().putString("groups", Json.encodeToString(dtos)).apply()
         } catch (e: Exception) {
 
         }
     }
 
     fun loadGroups(): List<PasswordGroup> {
-        val json = prefs.getString("groups", null) ?: return emptyList()
+        val raw = prefs.getString("groups", null) ?: return emptyList()
         return try {
-            val dtos = Json.decodeFromString<List<PasswordGroupDto>>(json)
-            dtos.map { dto ->
-                PasswordGroup(dto.name).apply {
-                    passwords.addAll(dto.passwords)
-                    selected = dto.selected
+            Json.decodeFromString<List<PasswordGroupDto>>(raw).mapNotNull { dto ->
+                when {
+                    dto.wordlistId == WordlistStore.GENERATED_ID ->
+                        PasswordGroup.imported(generatedEntry()).apply { selected = dto.selected }
+                    dto.wordlistId != null -> {
+                        // Drop entries whose file disappeared (uninstall, cleanup…).
+                        val entry = wordlistStore.importedPacks().firstOrNull { it.id == dto.wordlistId }
+                        entry?.let {
+                            PasswordGroup.imported(it).apply { selected = dto.selected }
+                        }
+                    }
+                    dto.passwords.isNotEmpty() ->
+                        PasswordGroup(dto.name, null, dto.passwords).apply { selected = dto.selected }
+                    else -> null
                 }
             }
         } catch (e: Exception) {
@@ -310,26 +349,15 @@ fun NetworkDiagnosticHubScreen(navController: NavController) {
         }
     }
 
-    val defaultPasswords = listOf(
-        "12345678", "YJFJTGM2", "11111111", "00000000", "22222222", "33333333", "44444444", "55555555",
-        "66666666", "77777777", "88888888", "99999999", "qwertyui", "qwertzui", "qwertyuiop", "asdfghjk",
-        "password", "adminadmin", "87654321", "12344321", "00001111", "12312312", "11223344", "1234567890",
-        "netgear1", "linksys1", "dlink123", "tplink123", "admin123", "rootroot", "guest123",
-        "qwerty123", "12345qwerty", "admin", "root", "12345", "123456", "1234567",
-        "freewifi", "free_wifi", "freewifi123", "internet", "guestwifi", "publicwifi", "welcome",
-        "welcome123", "login123", "wifi1234", "accesspoint", "hotspot123", "openwifi", "starbucks",
-        "mcdonalds", "public_wifi", "internet123", "home_wifi", "my_wifi", "secure_wifi", "w12345678i", "12346789"
-    ).distinct()
-
     val passwordGroups = remember {
         val loaded = loadGroups()
-        if (loaded.isNotEmpty()) {
-            mutableStateListOf<PasswordGroup>().apply { addAll(loaded) }
-        } else {
-            mutableStateListOf<PasswordGroup>().apply {
-                add(PasswordGroup(STOCK_GROUP_NAME).apply {
-                    passwords.addAll(defaultPasswords)
-                })
+        mutableStateListOf<PasswordGroup>().apply {
+            if (loaded.isNotEmpty()) {
+                addAll(loaded)
+            } else {
+                add(PasswordGroup.builtin(stockGroupName, wordlistStore, "common"))
+                // Generated on the fly: millions of candidates, zero APK weight.
+                add(PasswordGroup.imported(generatedEntry()).apply { selected = false })
             }
         }
     }
@@ -343,23 +371,20 @@ fun NetworkDiagnosticHubScreen(navController: NavController) {
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
-            try {
-                val groupName = getFileName(context, uri)
-                val inputStream = context.contentResolver.openInputStream(uri)
-                val text = inputStream?.bufferedReader()?.readText() ?: ""
-                inputStream?.close()
-                val imported = text.split("\\s+".toRegex())
-                    .map { it.trim() }
-                    .filter { it.isNotBlank() }
-                    .distinct()
-                if (imported.isNotEmpty()) {
-                    val group = PasswordGroup(groupName)
-                    group.passwords.addAll(imported)
-                    passwordGroups.add(group)
-                    saveGroups(passwordGroups)
+            scope.launch {
+                appendLog("Importing wordlist…")
+                // Streamed and de-duplicated off the main thread; the file itself
+                // lands in internal storage, never in SharedPreferences.
+                val entry = withContext(Dispatchers.IO) {
+                    runCatching { wordlistStore.importFromUri(uri) }.getOrNull()
                 }
-            } catch (e: Exception) {
-                appendLog("Import error: ${e.message}")
+                if (entry != null) {
+                    passwordGroups.add(PasswordGroup.imported(entry))
+                    saveGroups(passwordGroups)
+                    appendLog("Imported ${entry.count} passwords from ${entry.title}")
+                } else {
+                    appendLog("Import error: no usable password found in this file")
+                }
             }
         }
     }
@@ -947,15 +972,13 @@ fun NetworkDiagnosticHubScreen(navController: NavController) {
         sendLogs.clear()
         dialogStage = HubDialogStage.BruteForce
         val selectedGroups = passwordGroups.filter { it.selected }
-        val ordered = selectedGroups
-            .flatMap { it.allPasswords() }
-            .filter { it.length >= 8 }
-            .distinct()
-        val totalSelected = selectedGroups.sumOf { it.allPasswords().size }
+        // Upper bound shown in the log; the real run streams and de-duplicates on
+        // the fly, so nothing is materialised here.
+        val planned = selectedGroups.sumOf { it.validCount }
         val targetSsid = network.ssid.trim('"')
         appendLog("Starting Brute Force: $targetSsid")
         appendLog("Groups: ${selectedGroups.joinToString { it.name }}")
-        appendLog("Passwords to try: ${ordered.size} (${totalSelected - ordered.size} skipped, < 8 chars)")
+        appendLog("Passwords to try: up to $planned (short entries and duplicates skipped)")
 
         bruteForceJob = scope.launch(Dispatchers.IO) {
 
@@ -972,13 +995,23 @@ fun NetworkDiagnosticHubScreen(navController: NavController) {
                 return@launch
             }
 
-            for (index in ordered.indices) {
+            val candidates = sequence {
+                val seen = HashSet<String>(4096)
+                for (group in selectedGroups) {
+                    for (candidate in group.passwords(wordlistStore)) {
+                        if (candidate.length >= 8 && seen.add(candidate)) yield(candidate)
+                    }
+                }
+            }
+
+            var index = 0
+            for (password in candidates) {
                 if (!isActive) break
-                val password = ordered[index]
+                index++
 
                 withContext(Dispatchers.Main) {
                     currentBrutePassword = password
-                    appendLog("[${index + 1}/${ordered.size}] Testing: $password")
+                    appendLog("[$index/~$planned] Testing: $password")
                 }
 
 
@@ -2086,8 +2119,8 @@ private fun BrutePasswordDialog(
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         itemsIndexed(passwordGroups, key = { _, group -> group.name }) { index, group ->
-                            val count = group.passwords.size
-                            val validCount = group.passwords.count { it.length >= 8 }
+                            val count = group.count
+                            val validCount = group.validCount
                             val canDismiss = group.isImported
 
                             val dismissState = rememberSwipeToDismissBoxState(

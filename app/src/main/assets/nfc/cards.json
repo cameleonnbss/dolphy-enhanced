@@ -1,0 +1,384 @@
+{
+  "version": 1,
+  "note": "Reference data only. Phone NFC reads 13.56 MHz (ISO 14443 / 15693 / 18092). 125 kHz credentials are listed for identification, they cannot be read by a phone.",
+  "cards": [
+    {
+      "id": "mifare_classic_1k",
+      "name": "MIFARE Classic 1K",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A",
+      "freq": "13.56 MHz",
+      "memory": "1024 B (16 sectors × 4 blocks)",
+      "security": "Crypto1 — broken since 2008",
+      "atqa": "0x0004",
+      "sak": "0x08",
+      "notes": "Clonable with a phone in seconds. Still used by hotels, gyms, older offices and some transit systems."
+    },
+    {
+      "id": "mifare_classic_4k",
+      "name": "MIFARE Classic 4K",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A",
+      "freq": "13.56 MHz",
+      "memory": "4096 B (40 sectors)",
+      "security": "Crypto1 — broken",
+      "atqa": "0x0002",
+      "sak": "0x18",
+      "notes": "Same weakness as 1K. Sectors 0-31 are 4 blocks, 32-39 are 16 blocks."
+    },
+    {
+      "id": "mifare_ultralight",
+      "name": "MIFARE Ultralight",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A",
+      "freq": "13.56 MHz",
+      "memory": "64 B",
+      "security": "None / OTP",
+      "atqa": "0x0044",
+      "sak": "0x00",
+      "notes": "Event tickets, single-use passes. No cryptographic protection."
+    },
+    {
+      "id": "mifare_ultralight_c",
+      "name": "MIFARE Ultralight C",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A",
+      "freq": "13.56 MHz",
+      "memory": "192 B",
+      "security": "3DES authentication",
+      "atqa": "0x0044",
+      "sak": "0x00",
+      "notes": "Adds 3DES mutual authentication. Legacy 3DES is considered weak today."
+    },
+    {
+      "id": "ntag213",
+      "name": "NTAG213",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A (NFC Forum Type 2)",
+      "freq": "13.56 MHz",
+      "memory": "144 B usable",
+      "security": "Password / lock bits",
+      "atqa": "0x0044",
+      "sak": "0x00",
+      "notes": "The most common sticker tag. NDEF URL/ text payloads."
+    },
+    {
+      "id": "ntag215",
+      "name": "NTAG215",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A (NFC Forum Type 2)",
+      "freq": "13.56 MHz",
+      "memory": "504 B usable",
+      "security": "Password / lock bits",
+      "atqa": "0x0044",
+      "sak": "0x00",
+      "notes": "Amiibo-compatible size. Common in access-control stickers."
+    },
+    {
+      "id": "ntag216",
+      "name": "NTAG216",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A (NFC Forum Type 2)",
+      "freq": "13.56 MHz",
+      "memory": "888 B usable",
+      "security": "Password / lock bits",
+      "atqa": "0x0044",
+      "sak": "0x00",
+      "notes": "Largest NTAG. Often used for vCard and Wi-Fi sharing tags."
+    },
+    {
+      "id": "mifare_desfire_ev1",
+      "name": "MIFARE DESFire EV1",
+      "category": "access",
+      "standard": "ISO/IEC 14443-A (Type 4)",
+      "freq": "13.56 MHz",
+      "memory": "2 / 4 / 8 KB",
+      "security": "DES / 3DES / AES-128",
+      "atqa": "0x0344",
+      "sak": "0x20",
+      "notes": "Solid when AES is used. Legacy DES mode is the weak point."
+    },
+    {
+      "id": "mifare_desfire_ev2",
+      "name": "MIFARE DESFire EV2",
+      "category": "access",
+      "standard": "ISO/IEC 14443-A (Type 4)",
+      "freq": "13.56 MHz",
+      "memory": "2 / 4 / 8 / 16 KB",
+      "security": "AES-128, proximity checks",
+      "atqa": "0x0344",
+      "sak": "0x20",
+      "notes": "Adds transaction MAC and proximity verification against relay attacks."
+    },
+    {
+      "id": "mifare_desfire_ev3",
+      "name": "MIFARE DESFire EV3",
+      "category": "access",
+      "standard": "ISO/IEC 14443-A (Type 4)",
+      "freq": "13.56 MHz",
+      "memory": "2 – 32 KB",
+      "security": "AES-128, secure messaging",
+      "atqa": "0x0344",
+      "sak": "0x20",
+      "notes": "Current generation for corporate badges and campus cards."
+    },
+    {
+      "id": "mifare_plus",
+      "name": "MIFARE Plus",
+      "category": "access",
+      "standard": "ISO/IEC 14443-A",
+      "freq": "13.56 MHz",
+      "memory": "2 / 4 KB",
+      "security": "AES-128 (SL2/SL3)",
+      "sak": "0x08 / 0x18",
+      "notes": "Drop-in Crypto1 replacement. Once switched to SL3 it is not clonable."
+    },
+    {
+      "id": "iso15693_icode",
+      "name": "ICODE SLIX (ISO 15693)",
+      "category": "storage",
+      "standard": "ISO/IEC 15693 (NFC Forum Type 5)",
+      "freq": "13.56 MHz",
+      "memory": "128 – 2560 B",
+      "security": "Password / EAS",
+      "notes": "Longer read range (up to ~1 m). Library books, laundry tags, industrial asset labels."
+    },
+    {
+      "id": "felica",
+      "name": "FeliCa",
+      "category": "transit",
+      "standard": "ISO/IEC 18092 (NFC-F)",
+      "freq": "13.56 MHz",
+      "memory": "Varies (Suica, Pasmo, Octopus)",
+      "security": "Proprietary, per-service keys",
+      "notes": "Japan / Hong Kong transit and payment. Many phones can read it but not emulate it."
+    },
+    {
+      "id": "calypso",
+      "name": "Calypso",
+      "category": "transit",
+      "standard": "ISO/IEC 14443-B",
+      "freq": "13.56 MHz",
+      "memory": "Varies",
+      "security": "DES / AES per operator",
+      "notes": "Transit standard in France, Belgium, Portugal, Brazil, Egypt and others."
+    },
+    {
+      "id": "emv_visa",
+      "name": "Visa contactless",
+      "category": "payment",
+      "standard": "EMV (ISO 14443-A/B)",
+      "freq": "13.56 MHz",
+      "memory": "Card-dependent",
+      "security": "EMV cryptogram, tokenisation",
+      "aid": "A0000000031010",
+      "notes": "PAN and expiry are readable without authentication; the cryptogram is not replayable."
+    },
+    {
+      "id": "emv_mastercard",
+      "name": "Mastercard contactless",
+      "category": "payment",
+      "standard": "EMV (ISO 14443-A/B)",
+      "freq": "13.56 MHz",
+      "security": "EMV cryptogram, tokenisation",
+      "aid": "A0000000041010",
+      "notes": "Same EMV flow as Visa, different AID and application template."
+    },
+    {
+      "id": "emv_amex",
+      "name": "American Express contactless",
+      "category": "payment",
+      "standard": "EMV",
+      "freq": "13.56 MHz",
+      "security": "EMV cryptogram",
+      "aid": "A00000002501",
+      "notes": "Amex Pay / ExpressPay application."
+    },
+    {
+      "id": "emv_unionpay",
+      "name": "UnionPay QuickPass",
+      "category": "payment",
+      "standard": "EMV (PBOC)",
+      "freq": "13.56 MHz",
+      "security": "EMV cryptogram",
+      "aid": "A0000003330101",
+      "notes": "China mainland debit/credit contactless."
+    },
+    {
+      "id": "emv_jcb",
+      "name": "JCB contactless",
+      "category": "payment",
+      "standard": "EMV",
+      "freq": "13.56 MHz",
+      "security": "EMV cryptogram",
+      "aid": "A0000000651010",
+      "notes": "Japan-issued cards, also accepted across Asia."
+    },
+    {
+      "id": "emv_mir",
+      "name": "MIR contactless",
+      "category": "payment",
+      "standard": "EMV (NSPK)",
+      "freq": "13.56 MHz",
+      "security": "EMV cryptogram",
+      "aid": "A0000006581010",
+      "notes": "Russian domestic payment scheme."
+    },
+    {
+      "id": "hid_iclass",
+      "name": "HID iCLASS / iCLASS SE",
+      "category": "access",
+      "standard": "ISO/IEC 15693 derivative",
+      "freq": "13.56 MHz",
+      "security": "DES / 3DES, SE adds AES",
+      "notes": "Corporate badges. Legacy iCLASS (non-SE) keys have been recovered publicly, SE is not affected."
+    },
+    {
+      "id": "hid_seos",
+      "name": "HID Seos",
+      "category": "access",
+      "standard": "ISO 14443-A + secure element",
+      "freq": "13.56 MHz",
+      "security": "AES-128, mutual auth",
+      "notes": "Not clonable with a phone. Often paired with iCLASS for migration."
+    },
+    {
+      "id": "legic_advant",
+      "name": "LEGIC advant",
+      "category": "access",
+      "standard": "ISO 14443-A / 15693",
+      "freq": "13.56 MHz",
+      "security": "AES / 3DES segments",
+      "notes": "Common in European building access and time clocks."
+    },
+    {
+      "id": "hid_prox",
+      "name": "HID Prox (125 kHz)",
+      "category": "access",
+      "standard": "Proprietary 125 kHz",
+      "freq": "125 kHz",
+      "security": "None — ID only",
+      "notes": "Older office fobs. NOT readable by a phone: needs a 125 kHz coil (Flipper Zero, Proxmark)."
+    },
+    {
+      "id": "em4100",
+      "name": "EM4100 / EM4102 (125 kHz)",
+      "category": "access",
+      "standard": "Proprietary 125 kHz",
+      "freq": "125 kHz",
+      "security": "None — 40-bit ID, no auth",
+      "notes": "Trivially clonable with cheap hardware, but again: not via phone NFC."
+    },
+    {
+      "id": "city_union",
+      "name": "China City Union card (住建部)",
+      "category": "transit",
+      "standard": "ISO/IEC 14443-A (MIFARE based)",
+      "freq": "13.56 MHz",
+      "security": "Mixed — legacy Crypto1 in older issues",
+      "notes": "Older city bus cards are MIFARE Classic inside. Newer issues moved to CPU cards."
+    },
+    {
+      "id": "transport_union",
+      "name": "China T-Union (交通联合)",
+      "category": "transit",
+      "standard": "PBOC / ISO 14443",
+      "freq": "13.56 MHz",
+      "security": "CPU card, DES/AES",
+      "notes": "National intercity transit card. Modern issues are not clonable."
+    },
+    {
+      "id": "moscow_social",
+      "name": "Troika / social cards",
+      "category": "transit",
+      "standard": "MIFARE Plus / CPU",
+      "freq": "13.56 MHz",
+      "security": "AES",
+      "notes": "Representative of modern transit migrations: MIFARE Classic → Plus/DESFire."
+    },
+    {
+      "id": "hotel_rtc",
+      "name": "Hotel room key (RFID)",
+      "category": "access",
+      "standard": "MIFARE Classic / Ultralight / DESFire",
+      "freq": "13.56 MHz",
+      "security": "Depends on vendor",
+      "notes": "Many chains still ship MIFARE Classic with per-hotel keys. Check the SAK before assuming."
+    },
+    {
+      "id": "nfc_type1",
+      "name": "NFC Forum Type 1",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A (Innovision Topaz)",
+      "freq": "13.56 MHz",
+      "memory": "96 – 2 KB",
+      "security": "None",
+      "notes": "Rare today. Read/write with NDEF."
+    },
+    {
+      "id": "nfc_type3",
+      "name": "NFC Forum Type 3",
+      "category": "storage",
+      "standard": "ISO/IEC 18092 (FeliCa)",
+      "freq": "13.56 MHz",
+      "memory": "Varies",
+      "security": "Service keys",
+      "notes": "FeliCa-based tags used in Japan."
+    },
+    {
+      "id": "nfc_type4",
+      "name": "NFC Forum Type 4",
+      "category": "storage",
+      "standard": "ISO/IEC 14443-A/B (DESFire, Java Card)",
+      "freq": "13.56 MHz",
+      "memory": "Varies",
+      "security": "AES / 3DES",
+      "notes": "Smart posters, ticketing, passports' contactless interface."
+    },
+    {
+      "id": "epassport",
+      "name": "ePassport (ICAO 9303)",
+      "category": "identity",
+      "standard": "ISO/IEC 14443-A/B, LDS",
+      "freq": "13.56 MHz",
+      "security": "BAC / PACE + passive auth",
+      "notes": "Readable only with the MRZ key printed inside the document. Not a cloning target."
+    },
+    {
+      "id": "nfc_ring",
+      "name": "NFC ring / implant",
+      "category": "storage",
+      "standard": "NTAG21x in a wearable",
+      "freq": "13.56 MHz",
+      "security": "Password",
+      "notes": "Usually just an NTAG213 in resin — behaves exactly like a sticker."
+    },
+    {
+      "id": "amiibo",
+      "name": "amiibo",
+      "category": "storage",
+      "standard": "NTAG215",
+      "freq": "13.56 MHz",
+      "security": "Locked after write",
+      "notes": "NTAG215 with a locked data page. Can be cloned to a blank NTAG215."
+    },
+    {
+      "id": "tesla_keycard",
+      "name": "Tesla key card",
+      "category": "access",
+      "standard": "ISO 14443-A",
+      "freq": "13.56 MHz",
+      "security": "Vehicle-side challenge",
+      "notes": "Unlocked by the car, not by the card. Cloning the UID alone does nothing."
+    },
+    {
+      "id": "desfire_transit",
+      "name": "DESFire transit ticket",
+      "category": "transit",
+      "standard": "ISO 14443-A Type 4",
+      "freq": "13.56 MHz",
+      "security": "AES secure messaging",
+      "notes": "Typical for new deployments in Europe and Asia."
+    }
+  ]
+}

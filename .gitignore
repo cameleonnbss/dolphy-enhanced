@@ -12,3 +12,7 @@
 .cxx/
 **/app/.cxx/
 /plugin-test-suite/
+
+# release artifacts
+*.apk
+Dolphy-Enhanced-*.apk

@@ -60,6 +60,8 @@ fun functionDestinationSections(): List<Pair<String, List<FunctionDestination>>>
     val tvCastDesc = stringResource(R.string.smarttv_cast_card_description)
     val lanTitle = stringResource(R.string.lan_tools_title)
     val lanDesc = stringResource(R.string.lan_tools_subtitle)
+    val cardDbTitle = stringResource(R.string.card_db_title)
+    val cardDbDesc = stringResource(R.string.card_db_desc)
 
     return androidx.compose.runtime.remember(bySection, irFlipperTitle) {
         fun plugins(section: String): List<FunctionDestination> {
@@ -96,6 +98,13 @@ fun functionDestinationSections(): List<Pair<String, List<FunctionDestination>>>
         ) + plugins(OtherSections.BLUETOOTH)
         sections += OtherSections.OTHER to listOf(
             FunctionDestination(Icons.Outlined.Nfc, nfcTitle, nfcDesc, "other/nfc_tools", OtherSections.OTHER),
+            FunctionDestination(
+                Icons.Default.CreditCard,
+                cardDbTitle,
+                cardDbDesc,
+                "other/card_database",
+                OtherSections.OTHER,
+            ),
             FunctionDestination(Icons.Default.QrCodeScanner, qrTitle, qrDesc, "other/qr_tools", OtherSections.OTHER),
             FunctionDestination(Icons.Filled.WifiOff, "WI-FI Attacks", netHubDesc, "other/network_diagnostic_hub", OtherSections.OTHER),
             FunctionDestination(Icons.Default.Cast, tvCastTitle, tvCastDesc, "other/smarttv_cast", OtherSections.OTHER),

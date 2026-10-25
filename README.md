@@ -1,86 +1,93 @@
-# Dolphy
+# Dolphy Enhanced
 
-Dolphy is a powerful Android multi-tool developed for wireless protocol research, cybersecurity testing, and hardware emulation. It brings advanced hardware-focused utility functions to stock Android devices completely without root access.
+An enhanced fork of [Dolphy](https://github.com/unvoiddd/Dolphy-App) — an Android
+multi-tool for wireless protocol research, NFC/RFID work and hardware emulation.
+No root required for most modules.
 
-Dolphy releases telegram channel - https://t.me/Dolphy_app_official
+**Enhanced by [camzzz](https://github.com/camzzz)** · original project by
+[unvoiddd](https://github.com/unvoiddd) · GNU GPL v3.
 
-## The project is protected by a license; please review it!
-
-## Features & Modules
-
-### 🚨 Infrared (IR)
-- Universal Remotes: Comprehensive database integration supporting TVs, ACs, Audio systems, and Projectors (compiled from Flipper-IRDB-main and flipperzero-firmware-dev).
-- IR-Storm: Automated module to send consecutive power-off signals to multiple hardware targets.
-- IR Jammer: Prevents surrounding remote control devices from interacting with nearby hardware.
-
-### 📶 Bluetooth & BLE
-- Audio Device Scanner: Specialized tool to discover, test, and connect to various Bluetooth audio hardware, speakers, and headphones.
-- Advanced NRF Scanner: Professional-grade Bluetooth Low Energy (BLE) device discovery and packet analysis.
-- Dolphy Chat: local chat application operating entirely over BLE protocols with other Dolphy users.
-- HID Keyboard & Mouse: Hardware emulation layer allowing your smartphone to act as a wireless Bluetooth keyboard or mouse.
-- Bluetooth Jammer: Stress-testing module utilizing L2CAP flood attacks to evaluate wireless network resilience.
-
-### 📡 NFC & QR Tools
-- NFC Instruments: Low-level modules designed for reading, writing, and interacting with diverse NFC tags and cards.
-- QR Tools: Fast QR-code generation and specialized remote audio control mechanisms.
-
-### 🌐 Network & Wi-Fi Testing
-- Wi-Fi Attacks: Built-in network diagnostic environment capable of wireless network scanning, Wi-Fi DoS simulations, and credential Brute-forcing.
-- LAN Scanner: Rapid discovery tool to map all connected hosts and devices within the current local Wi-Fi subnet.
-
-### 📺 Media Protocols
-- SmartTV Cast: Native media streaming and broadcasting support using Chromecast, DIAL, DLNA, and UPnP protocols.
-
-## Credits & Special Thanks
-
-Special thanks to the developers and researchers who helped bring this project to life:
-- ZalexDev
-- ars3nb
-- Astrocodee
-
-================================================================================
-
-# Dolphy
-
-Dolphy — это мощный Android-мультитул, созданный для исследования беспроводных протоколов, тестирования кибербезопасности и эмуляции работы различного железа. Приложение переносит продвинутый технический функционал на обычные Android-смартфоны полностью без необходимости получения root-прав.
+> ⚠️ Use only on devices and networks you own or are explicitly authorised to
+> test. Jamming, disrupting third-party devices or intercepting other people's
+> traffic is illegal in most countries and is **not** part of this build.
 
 ---
 
-## Функционал и модули
+## What this fork adds
 
-### 🚨 Инфракрасный порт (IR)
-- Универсальные пульты: Интеграция обширных баз данных для управления телевизорами, кондиционерами, аудиосистемами и проекторами (на основе репозиториев Flipper-IRDB-main и flipperzero-firmware-dev).
-- ИК-Шторм: Автоматизированный модуль для массовой отправки сигналов выключения на окружающие устройства.
-- ИК Глушилка: Блокирует сигналы сторонних пультов, не позволяя им управлять целевой техникой.
+### 15 languages, properly wired
+`values/` is English (the fallback), so a partially translated locale degrades to
+English instead of Russian. A searchable language picker, native language names,
+RTL support for Arabic, and a "follow the system" mode.
 
-### 📶 Bluetooth и BLE
-- Сканер аудиоустройств: Специализированный инструмент для поиска, тестирования и подключения к беспроводным колонкам и наушникам.
-- Продвинутый NRF сканер: Инструмент профессионального уровня для обнаружения BLE-устройств и анализа пакетов данных.
-[26.06.2026 12:40] : - Dolphy Chat: Локальный защищенный чат, работающий напрямую через протоколы BLE между пользователями Dolphy.
-- HID клавиатура и мышь: Эмуляция аппаратных компонентов, позволяющая использовать смартфон как беспроводную клавиатуру или мышь для ПК и других систем.
-- Bluetooth Jammer: Модуль стресс-тестирования беспроводных систем, использующий атаки типа L2CAP flood для проверки устойчивости оборудования.
+`English · Русский · Français · Español · Deutsch · Italiano · Português ·
+Türkçe · Українська · Polski · العربية · हिन्दी · Bahasa Indonesia · 中文 ·
+日本語 · 한국어`
 
-### 📡 NFC и QR инструменты
-- NFC инструменты: Низкоуровневые модули для чтения, анализа, записи и взаимодействия с различными типами NFC-меток и смарт-карт.
-- QR инструменты: Быстрая генерация QR-кодов и реализация функций удаленного управления аудиосистемами.
+### Wordlists that do not blow up the phone
+- Bundled packs streamed line by line (`common`, `router_defaults`).
+- Imported lists are normalised once and stored as files, not in
+  SharedPreferences — a 14M-line rockyou import no longer OOMs.
+- **Generated patterns**: masks produce hundreds of thousands of realistic
+  candidates (8-digit space with an even stride, word+year, word+4 digits,
+  vendor+suffix) with zero APK weight.
 
-### 🌐 Сеть и Wi-Fi
-- Wi-Fi атаки: Встроенная среда для диагностики сетей, включающая сканирование радиоэфира, симуляцию Wi-Fi DoS-атак и проверку паролей на устойчивость к брутфорсу.
-- LAN сканер: Быстрое обнаружение и составление карты всех активных устройств в текущей локальной Wi-Fi сети.
+### Card database
+A browsable reference of ~37 NFC/RFID families — MIFARE Classic/Plus/DESFire,
+NTAG, ICODE, FeliCa, Calypso, EMV AIDs (Visa, Mastercard, Amex, UnionPay, JCB,
+MIR), HID iCLASS/Seos, LEGIC, City Union / T-Union transit, ePassport, hotel
+keys, and the 125 kHz credentials a phone *cannot* read. Searchable by name,
+standard, ATQA/SAK or AID.
 
-### 📺 Медиа-протоколы
-- SmartTV Cast: Поддержка прямой трансляции и вещания медиапотоков на телевизоры через протоколы Chromecast, DIAL, DLNA и UPnP.
+### Root detection
+`RootDetector` reports whether the device is rooted, which manager is installed
+(Magisk / KernelSU / APatch / SuperSU), the `su` path and version — cached for a
+minute and bounded by a timeout, so a denied Magisk prompt cannot hang the UI.
+
+### Developer tooling
+- `tools/i18n/` — parity, generation and coverage checks for translations.
+- `tools/new-module.py` — scaffolds a screen, its strings, and prints the catalog
+  and nav snippets to paste.
+- `docs/ADD-A-MODULE.md` — the three extension paths (plugin / native / assets).
 
 ---
 
-## Разработка и архитектура
+## Build
 
-Приложение разработано с нуля с использованием современного стека Java и Kotlin.
----
+```bash
+# Linux / macOS
+./gradlew assembleDebug
 
-## Благодарности / Credits
+# Windows
+gradlew.bat assembleDebug
+```
 
-Искренняя благодарность разработчикам и исследователям, внесшим вклад в развитие проекта:
-- ZalexDev
-- ars3nb
-- Astrocodee
+Requires JDK 17+ and Android SDK 36. The output APK lands in
+`app/build/outputs/apk/debug/`.
+
+Release builds are signed with the debug key by default — replace
+`signingConfigs` before publishing.
+
+## Project layout
+
+```
+app/src/main/java/com/droid/dolphy/     Kotlin sources (Compose UI + engines)
+app/src/main/assets/                    IR database, BLE payloads, wordlists, NFC cards
+app/src/main/res/values/                English strings (default)
+app/src/main/res/values-<lang>/         Translations
+tools/                                  i18n pipeline + module scaffolder
+docs/                                   Module guide, changelog, roadmap
+plugin-examples/                        .dolphyplugin samples
+```
+
+## Documentation
+
+- [`docs/ENHANCED.md`](docs/ENHANCED.md) — what changed in 2.7, roadmap, and what
+  is deliberately out of scope.
+- [`docs/ADD-A-MODULE.md`](docs/ADD-A-MODULE.md) — extend the app.
+- [`docs/IMPROVEMENTS.md`](docs/IMPROVEMENTS.md) — 2.6 i18n/wordlist work.
+
+## Licence
+
+GNU GPL v3. See [`LICENSE`](LICENSE). The upstream attribution stays: it is a
+licence requirement, not a courtesy.

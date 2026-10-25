@@ -170,6 +170,126 @@ fun applyInAppLocale(context: Context) {
     }
 }
 
+/**
+ * Language chooser: "system default" plus every locale listed in
+ * [LanguageCatalog]. Native names are always shown so people can find their
+ * language even when the current UI language is not theirs.
+ */
+@Composable
+private fun LanguagePickerDialog(
+    selectedTag: String,
+    accentColor: Color,
+    onDismiss: () -> Unit,
+    onSelect: (String) -> Unit,
+) {
+    var query by remember { mutableStateOf("") }
+    val systemLabel = stringResource(R.string.language_system)
+
+    val rows = remember(query, systemLabel) {
+        val q = query.trim().lowercase()
+        val base = buildList {
+            add(Triple(LanguageCatalog.SYSTEM, systemLabel, "AUTO"))
+            LanguageCatalog.languages.forEach { lang ->
+                add(Triple(lang.tag, lang.nativeName, lang.badge))
+            }
+        }
+        if (q.isEmpty()) {
+            base
+        } else {
+            base.filter { (tag, native, badge) ->
+                val english = LanguageCatalog.find(tag)?.englishName.orEmpty()
+                tag.contains(q) ||
+                    native.lowercase().contains(q) ||
+                    english.lowercase().contains(q) ||
+                    badge.lowercase().contains(q)
+            }
+        }
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Column {
+                Text(
+                    stringResource(R.string.language_picker_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    stringResource(R.string.language_picker_subtitle),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = query,
+                    onValueChange = { query = it },
+                    singleLine = true,
+                    placeholder = { Text(stringResource(R.string.language_picker_search)) },
+                    leadingIcon = {
+                        Icon(Icons.Default.Search, contentDescription = null)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                LazyColumn(modifier = Modifier.heightIn(max = 380.dp)) {
+                    items(rows, key = { it.first }) { (tag, label, badge) ->
+                        val selected = tag == selectedTag ||
+                            (tag != LanguageCatalog.SYSTEM && LanguageCatalog.find(selectedTag)?.tag == tag)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(12.dp))
+                                .clickable { onSelect(tag) }
+                                .padding(horizontal = 8.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(34.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        if (selected) accentColor.copy(alpha = 0.18f)
+                                        else MaterialTheme.colorScheme.surfaceVariant
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    badge,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (selected) accentColor
+                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            Spacer(Modifier.width(12.dp))
+                            Text(
+                                label,
+                                modifier = Modifier.weight(1f),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            RadioButton(
+                                selected = selected,
+                                onClick = { onSelect(tag) }
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.close))
+            }
+        }
+    )
+}
+
 data class BleDeviceItem(
     val name: String,
     val spammerFactory: () -> Spammer
@@ -1034,6 +1154,7 @@ fun MainScaffold(
             }
             composable("nfc_tools") { NfcToolsScreen(screenNavController) }
             composable("other/nfc_tools") { NfcToolsScreen(screenNavController) }
+            composable("other/card_database") { CardCatalogScreen(screenNavController) }
             composable("nfc_erase") { NfcEraseScreen(screenNavController, nfcViewModel) }
             composable("other/nfc_erase") { NfcEraseScreen(screenNavController, nfcViewModel) }
             composable("nfc_write_menu") { NfcWriteMenuScreen(screenNavController, nfcViewModel) }
@@ -2967,6 +3088,7 @@ fun SettingsScreen(spamViewModel: SpamViewModel, dolphyViewModel: DolphyViewMode
     }
     val uriHandler = LocalUriHandler.current
     val appLanguage by spamViewModel.appLanguage.collectAsState()
+    var languagePickerOpen by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -3025,39 +3147,60 @@ fun SettingsScreen(spamViewModel: SpamViewModel, dolphyViewModel: DolphyViewMode
                         shape = getSegmentedShape(0, generalItems),
                         contentPadding = 16.dp
                     ) {
-                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Default.Language,
-                                    contentDescription = null,
-                                    tint = accentColor,
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(Modifier.width(12.dp))
+                        val currentLanguageLabel = if (appLanguage == LanguageCatalog.SYSTEM) {
+                            stringResource(R.string.language_system)
+                        } else {
+                            LanguageCatalog.find(appLanguage)?.nativeName ?: "English"
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { languagePickerOpen = true }
+                                .padding(vertical = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Language,
+                                contentDescription = null,
+                                tint = accentColor,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(Modifier.width(12.dp))
+                            Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     stringResource(R.string.settings_language),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
+                                Text(
+                                    currentLanguageLabel,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                             }
-                            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                                listOf(
-                                    stringResource(R.string.language_russian) to "ru",
-                                    "English" to "en",
-                                ).forEachIndexed { index, (label, language) ->
-                                    SegmentedButton(
-                                        selected = appLanguage == language,
-                                        onClick = {
-                                            spamViewModel.setAppLanguage(language)
-                                            applyInAppLocale(context)
-                                        },
-                                        shape = SegmentedButtonDefaults.itemShape(index, 2),
-                                        label = { Text(label) },
-                                    )
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
+                    }
+
+                    if (languagePickerOpen) {
+                        LanguagePickerDialog(
+                            selectedTag = appLanguage,
+                            accentColor = accentColor,
+                            onDismiss = { languagePickerOpen = false },
+                            onSelect = { tag ->
+                                languagePickerOpen = false
+                                if (tag != appLanguage) {
+                                    spamViewModel.setAppLanguage(tag)
+                                    applyInAppLocale(context)
                                 }
                             }
-                        }
+                        )
                     }
 
 
@@ -3643,16 +3786,54 @@ fun SettingsScreen(spamViewModel: SpamViewModel, dolphyViewModel: DolphyViewMode
                         contentPadding = 0.dp
                     ) {
                         Column {
-                            SettingsItem(onClick = { uriHandler.openUri("https://t.me/Dolphy_app_official") }) {
-                                Icon(Icons.AutoMirrored.Filled.Send, null, tint = accentColor, modifier = Modifier.size(24.dp))
+                            val rootStatus by produceState<RootStatus?>(initialValue = null) {
+                                value = withContext(Dispatchers.IO) { RootDetector.status(context) }
+                            }
+                            SettingsItem {
+                                Icon(
+                                    Icons.Default.Shield,
+                                    null,
+                                    tint = accentColor,
+                                    modifier = Modifier.size(24.dp)
+                                )
                                 Spacer(Modifier.width(12.dp))
-                                Text("Dolphy dev", style = MaterialTheme.typography.bodyLarge)
-                                Spacer(Modifier.weight(1f))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        stringResource(R.string.settings_root_title),
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        when {
+                                            rootStatus == null -> stringResource(R.string.settings_root_checking)
+                                            rootStatus!!.rooted -> stringResource(R.string.settings_root_yes) +
+                                                " · " + rootStatus!!.label
+                                            else -> stringResource(R.string.settings_root_no)
+                                        },
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                            MaterialDivider()
+                            SettingsItem(onClick = { uriHandler.openUri(About.AUTHOR_GITHUB) }) {
+                                Icon(Icons.Default.Person, null, tint = accentColor, modifier = Modifier.size(24.dp))
+                                Spacer(Modifier.width(12.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        stringResource(R.string.about_enhanced_by),
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        "@${About.AUTHOR} · ${stringResource(R.string.about_github)}",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
                                 Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             MaterialDivider()
-                            SettingsItem(onClick = { uriHandler.openUri("https://github.com/unvoiddd/Dolphy-App") }) {
-                                Icon(Icons.Default.Circle, null, tint = accentColor, modifier = Modifier.size(24.dp))
+                            SettingsItem(onClick = { uriHandler.openUri(About.UPSTREAM_GITHUB) }) {
+                                Icon(Icons.Default.Circle, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(12.dp))
                                 Text("Github", style = MaterialTheme.typography.bodyLarge)
                                 Spacer(Modifier.weight(1f))
@@ -3666,7 +3847,7 @@ fun SettingsScreen(spamViewModel: SpamViewModel, dolphyViewModel: DolphyViewMode
             item {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Dolphy ($appVersion)\nЗащищено GNU GPL",
+                    text = "${stringResource(R.string.app_name)} $appVersion\n${stringResource(R.string.about_license)}\n${stringResource(R.string.about_upstream)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.fillMaxWidth(),
@@ -3683,7 +3864,7 @@ fun SettingsScreen(spamViewModel: SpamViewModel, dolphyViewModel: DolphyViewMode
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Спасибо:",
+                        text = stringResource(R.string.about_contributors),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontWeight = FontWeight.Bold
@@ -5819,7 +6000,9 @@ class SpamViewModel(private val application: Application) : AndroidViewModel(app
     val animatedBackgroundEnabled: StateFlow<Boolean> = _animatedBackgroundEnabled
     private val _expressiveEnabled = MutableStateFlow(prefs.getBoolean("md3_expressive", false))
     val expressiveEnabled: StateFlow<Boolean> = _expressiveEnabled
-    private val _appLanguage = MutableStateFlow(prefs.getString("app_language", "ru") ?: "ru")
+    private val _appLanguage = MutableStateFlow(
+        LanguageCatalog.normalizeTag(prefs.getString(AppLocale.KEY_LANGUAGE, LanguageCatalog.SYSTEM))
+    )
     val appLanguage: StateFlow<String> = _appLanguage
     private val _cyclicDolphinAnimationEnabled = MutableStateFlow(prefs.getBoolean("cyclic_dolphin_animation_enabled", false))
     val cyclicDolphinAnimationEnabled: StateFlow<Boolean> = _cyclicDolphinAnimationEnabled
@@ -6041,8 +6224,8 @@ class SpamViewModel(private val application: Application) : AndroidViewModel(app
     }
 
     fun setAppLanguage(language: String) {
-        val normalized = if (language == "en") "en" else "ru"
-        prefs.edit { putString("app_language", normalized) }
+        val normalized = LanguageCatalog.normalizeTag(language)
+        prefs.edit { putString(AppLocale.KEY_LANGUAGE, normalized) }
         _appLanguage.value = normalized
     }
 

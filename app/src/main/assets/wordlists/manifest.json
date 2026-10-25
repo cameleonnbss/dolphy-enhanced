@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "packs": [
+    {
+      "id": "common",
+      "file": "common.txt",
+      "titleKey": "wordlist_common_title",
+      "minLength": 8
+    },
+    {
+      "id": "router_defaults",
+      "file": "router_defaults.txt",
+      "titleKey": "wordlist_router_title",
+      "minLength": 8
+    }
+  ]
+}
