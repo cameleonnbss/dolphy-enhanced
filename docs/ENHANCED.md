@@ -1,3 +1,41 @@
+# Dolphy Enhanced — 3.4
+
+`versionCode 34` · `versionName 3.4-enhanced`
+
+## Plugins are reachable from the function list
+
+The plugin manager only existed behind Settings → General → Plugins. It is now a
+card in the "Other" section, with the same import flow (`Choose file` →
+preview → install), so importing a `.dolphyplugin` no longer requires knowing
+where it hides.
+
+## The upstream promo link is gone
+
+`PluginSecurityScreen` had a "Documentation website" button pointing at
+`unvoiddd.github.io/Dolphy-App` — the original author's site. It now points at
+`docs/ADD-A-MODULE.md` in this repository. The GPL attribution line
+("Based on the original Dolphy by unvoiddd — GPL v3") stays in About, because
+removing it would make the build non-compliant; what is gone is the promotional
+link, which the licence does not require.
+
+## AI generator: provider presets
+
+Five endpoints that speak the OpenAI dialect are one tap away instead of typing
+a URL and a model name from memory:
+
+| Preset | Endpoint | Default model |
+|---|---|---|
+| OpenRouter | `openrouter.ai/api/v1` | `meta-llama/llama-3.3-70b-instruct:free` |
+| Groq | `api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
+| Together | `api.together.xyz/v1` | `Llama-3.3-70B-Instruct-Turbo` |
+| Mistral | `api.mistral.ai/v1` | `mistral-large-latest` |
+| Ollama | `localhost:11434/v1` | `llama3.1` |
+
+Choosing a preset only fills the fields — no request is made until Generate, and
+the key is still sent to that provider alone.
+
+---
+
 # Dolphy Enhanced — 3.3
 
 `versionCode 33` · `versionName 3.3-enhanced`

@@ -1160,4 +1160,5 @@ Les auteurs et contributeurs n\'assument aucune responsabilité en cas de mauvai
     <string name="ir_pack_body">La base de télécommandes Flipper (12 Mo, plus de 10 000 télécommandes) est un téléchargement séparé pour garder l\'application légère. Une seule fois : elle reste ensuite sur l\'appareil.</string>
     <string name="ir_pack_download">Télécharger la base (12 Mo)</string>
     <string name="ir_pack_failed">Échec du téléchargement : %1$s</string>
+    <string name="plugin_manager_short_desc">Installer et gérer des modules (.dolphyplugin)</string>
 </resources>

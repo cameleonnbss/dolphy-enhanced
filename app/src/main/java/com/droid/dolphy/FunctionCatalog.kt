@@ -66,6 +66,8 @@ fun functionDestinationSections(): List<Pair<String, List<FunctionDestination>>>
     val aiDesc = stringResource(R.string.ai_intro)
     val bleSpamTitle = stringResource(R.string.ble_spam_title)
     val bleSpamDesc = stringResource(R.string.ble_spam_desc)
+    val pluginsTitle = stringResource(R.string.plugin_manager_title)
+    val pluginsDesc = stringResource(R.string.plugin_manager_short_desc)
     val bondSpamTitle = stringResource(R.string.bond_spam_title)
     val bondSpamDesc = stringResource(R.string.bond_spam_desc)
 
@@ -134,6 +136,13 @@ fun functionDestinationSections(): List<Pair<String, List<FunctionDestination>>>
             FunctionDestination(Icons.Filled.WifiOff, "WI-FI Attacks", netHubDesc, "other/network_diagnostic_hub", OtherSections.OTHER),
             FunctionDestination(Icons.Default.Cast, tvCastTitle, tvCastDesc, "other/smarttv_cast", OtherSections.OTHER),
             FunctionDestination(Icons.Default.Router, lanTitle, lanDesc, "other/lan_scanner", OtherSections.OTHER),
+            FunctionDestination(
+                Icons.Default.Extension,
+                pluginsTitle,
+                pluginsDesc,
+                "plugin_manager",
+                OtherSections.OTHER,
+            ),
         ) + plugins(OtherSections.OTHER)
 
         val pluginSection = plugins(OtherSections.PLUGINS)

@@ -1,6 +1,7 @@
 package com.droid.dolphy.plugin.ai
 
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.FilterChip
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,6 +59,19 @@ import java.io.File
  * screen — a generated plugin is executable Python with the permissions it
  * declares, so blind install would be reckless.
  */
+/**
+ * Endpoints that speak the OpenAI chat-completions dialect. Picking one only
+ * fills the two fields — nothing is sent anywhere until Generate is pressed, and
+ * the key still goes to that provider alone.
+ */
+private val PROVIDER_PRESETS = listOf(
+    Triple("https://openrouter.ai/api/v1", "meta-llama/llama-3.3-70b-instruct:free", "OpenRouter"),
+    Triple("https://api.groq.com/openai/v1", "llama-3.3-70b-versatile", "Groq"),
+    Triple("https://api.together.xyz/v1", "meta-llama/Llama-3.3-70B-Instruct-Turbo", "Together"),
+    Triple("https://api.mistral.ai/v1", "mistral-large-latest", "Mistral"),
+    Triple("http://localhost:11434/v1", "llama3.1", "Ollama"),
+)
+
 @Composable
 fun AiModuleScreen(navController: NavController) {
     val context = LocalContext.current
@@ -107,6 +123,23 @@ fun AiModuleScreen(navController: NavController) {
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            PROVIDER_PRESETS.forEach { preset ->
+                                FilterChip(
+                                    selected = baseUrl == preset.first && model == preset.second,
+                                    onClick = {
+                                        baseUrl = preset.first
+                                        model = preset.second
+                                    },
+                                    label = { Text(preset.third) }
+                                )
+                            }
+                        }
                         OutlinedTextField(
                             value = baseUrl,
                             onValueChange = { baseUrl = it },
