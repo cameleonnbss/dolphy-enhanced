@@ -34,8 +34,8 @@ android {
         applicationId = "com.droid.dolphy"
         minSdk = 26
         targetSdk = 36
-        versionCode = 31
-        versionName = "3.1-enhanced"
+        versionCode = 32
+        versionName = "3.2-enhanced"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -43,7 +43,9 @@ android {
 
 
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            // ARM only: x86/x86_64 native libs exist for emulators, cost 7.4 MB
+            // of the APK and are never used on a real phone.
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
 
     }
@@ -69,7 +71,7 @@ android {
 
         }
         release {
-            isCrunchPngs = false
+            isCrunchPngs = true
             isMinifyEnabled = true
             isShrinkResources = true
             isProfileable = false
@@ -88,7 +90,8 @@ android {
     }
 
     androidResources {
-        noCompress += "png"
+        // PNGs were stored uncompressed (8 MB of them); let the packer deflate.
+        noCompress -= "png"
     }
     lint {
         checkReleaseBuilds = false

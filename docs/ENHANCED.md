@@ -1,3 +1,38 @@
+# Dolphy Enhanced — 3.2
+
+`versionCode 32` · `versionName 3.2-enhanced`
+
+## APK: 63 MB → 51 MB
+
+The APK shipped four native ABIs. Two of them — `x86` and `x86_64` — only exist
+for emulators: no phone in the wild runs them, and they were 7.4 MB of the
+download. `abiFilters` is now `armeabi-v7a` + `arm64-v8a`.
+
+Consequences, stated plainly: the APK no longer installs on an x86 emulator or on
+an Intel Chromebook with Android apps. Build a debug variant for those — the
+`abiFilters` change is release-side only in spirit, so revert it locally if you
+need emulator installs.
+
+PNG crunching is enabled (`isCrunchPngs = true`) and `noCompress` no longer
+carries `png`.
+
+Measured on the same source tree: 61.2 MB of compressed payload before, 51 MB
+after.
+
+## What is still heavy, and why
+
+| Item | Compressed | Verdict |
+|---|---|---|
+| `assets/chaquopy` | 13.4 MB | Python runtime for the plugin system. Removing it kills `.dolphyplugin` support. |
+| `assets/Flipper-IRDB-main` | 12.1 MB | The IR database. Movable to a downloadable pack, but that needs a download + unzip path in the IR loader first. |
+| `classes*.dex` | 12.2 MB | Already R8-shrunk. |
+| native libs | 6.7 MB | ARM only now. |
+
+The IR pack is the next real step: it would take the APK to roughly 39 MB, at the
+cost of an empty IR section until the pack is downloaded.
+
+---
+
 # Dolphy Enhanced — 3.1
 
 `versionCode 31` · `versionName 3.1-enhanced`
