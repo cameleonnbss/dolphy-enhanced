@@ -14,9 +14,10 @@ NFC/RFID y emulación de hardware. La mayoría de los módulos funcionan sin roo
 
 ## Lo que añade esta bifurcación
 
-- **15 idiomas** bien conectados: `values/` contiene el inglés, así que un
-  idioma parcialmente traducido cae al inglés y no al ruso. Selector con
-  búsqueda, nombres nativos, soporte RTL (árabe) y modo «como el sistema».
+- **16 idiomas, todos completos**: `values/` contiene el inglés, así que un
+  idioma parcialmente traducido cae al inglés y no al ruso. Las dieciséis
+  locales llevan las 1155 claves. Selector con búsqueda, nombres nativos,
+  soporte RTL (árabe) y modo «como el sistema».
 - **Listas de palabras que ya no bloquean el teléfono**: packs incluidos leídos
   línea por línea, importaciones normalizadas una vez y guardadas en archivo (ya
   no hay un blob JSON en las preferencias) y **patrones generados**: cientos de

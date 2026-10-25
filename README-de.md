@@ -14,10 +14,10 @@ Die meisten Module laufen ohne Root.
 
 ## Was dieser Fork hinzufügt
 
-- **15 Sprachen**, korrekt verdrahtet: `values/` enthält Englisch, eine
+- **16 Sprachen, alle vollständig**: `values/` enthält Englisch, eine
   teilweise übersetzte Sprache fällt also auf Englisch zurück, nicht auf
-  Russisch. Auswahl mit Suche, nativen Namen, RTL-Unterstützung (Arabisch) und
-  Modus „wie das System“.
+  Russisch. Alle sechzehn Locales tragen die 1155 Schlüssel. Auswahl mit Suche,
+  nativen Namen, RTL-Unterstützung (Arabisch) und Modus „wie das System“.
 - **Wortlisten, die das Telefon nicht mehr lahmlegen**: mitgelieferte Pakete
   zeilenweise gelesen, Importe einmal normalisiert und als Datei gespeichert
   (kein JSON-Block mehr in den Einstellungen) und **generierte Muster**:

@@ -15,11 +15,12 @@ No root required for most modules.
 
 ## What this fork adds
 
-### 16 languages, three of them complete
+### 16 languages, all complete
 `values/` is English (the fallback), so a partially translated locale degrades to
-English instead of Russian. English, Russian, French and Spanish are complete
-(1155 keys each); the other twelve carry the 122 highest-traffic strings. A searchable language picker, native language names,
-RTL support for Arabic, and a "follow the system" mode.
+English instead of Russian. **All sixteen locales now carry the full 1155 keys** —
+no screen can fall back to English for a user who picked another language. A
+searchable language picker, native language names, RTL support for Arabic, and a
+"follow the system" mode.
 
 `English · Русский · Français · Español · Deutsch · Italiano · Português ·
 Türkçe · Українська · Polski · العربية · हिन्दी · Bahasa Indonesia · 中文 ·
@@ -98,19 +99,18 @@ Debug builds are produced by CI on every push to `main` (see
 `.github/workflows/build.yml`). To cut a tagged release:
 
 ```bash
-git tag -a v2.9 -m "Dolphy Enhanced 2.9"
-git push origin v2.9
+git tag -a v3.6 -m "Dolphy Enhanced 3.6"
+git push origin v3.6
 ```
 
 Suggested release description:
 
-> **Dolphy Enhanced 2.9**
-> AI module generator (any OpenAI-compatible endpoint, review before install) ·
-> first-launch usage gate · Functions screen search · new adaptive icon · OUI
-> manufacturer database (335 prefixes) · 15 languages with English as the
-> fallback · streaming wordlists + generated patterns · NFC/RFID card database
-> (37 families) · root detection with manager and version · README in 5
-> languages.
+> **Dolphy Enhanced 3.6**
+> All 16 languages complete (1155 keys each) · IR database as a downloadable
+> pack (APK 63 → 38 MB) · AI module generator with provider presets · NFC/RFID
+> card database (90 entries, security verdict per card) · OUI manufacturer
+> lookup · first-launch usage gate · Functions screen search · streaming
+> wordlists + generated patterns · root detection with manager and version.
 > Educational and authorised targets only.
 
 ## Licence

@@ -1,3 +1,61 @@
+# Dolphy Enhanced — 3.6
+
+`versionCode 36` · `versionName 3.6-enhanced`
+
+## All sixteen languages at 100 %
+
+The twelve locales that still fell back to English now carry the full 1155 keys.
+No screen in the app can show an English string to a user who picked German,
+Italian, Portuguese, Turkish, Ukrainian, Polish, Arabic, Hindi, Indonesian,
+Chinese, Japanese or Korean.
+
+| Locale | Before | After |
+|---|---|---|
+| Arabic (`ar`) | 123 | **1155** |
+| German (`de`) | 123 | **1155** |
+| Hindi (`hi`) | 123 | **1155** |
+| Indonesian (`id`) | 123 | **1155** |
+| Italian (`it`) | 123 | **1155** |
+| Japanese (`ja`) | 123 | **1155** |
+| Korean (`ko`) | 123 | **1155** |
+| Polish (`pl`) | 123 | **1155** |
+| Portuguese (`pt`) | 123 | **1155** |
+| Turkish (`tr`) | 123 | **1155** |
+| Ukrainian (`uk`) | 123 | **1155** |
+| Chinese (`zh`) | 123 | **1155** |
+
+English, Russian, French and Spanish were already complete and were left
+untouched — existing translations are never overwritten.
+
+### How it was done
+
+A thousand strings times twelve languages is not a hand job, so the pass is
+scripted: `tools/i18n/machine_translate.py`.
+
+- **Format specifiers are protected.** `%1$s`, `%2$d`, `%1$04X` and `%%` are
+  swapped for `[[0]]`-style tokens before the request and restored afterwards,
+  so they can neither move nor be translated. `check_coverage.py` still
+  re-verifies them key by key: **0 mismatches across 16 locales**.
+- **Escaping is handled both ways.** `\'`, `\"`, `\n`, `&amp;` and numeric
+  entities are unescaped for the translator and re-escaped for aapt2.
+  `check_escaping.py --strict` reports nothing on the 16 files.
+- **Requests are batched.** The endpoint accepts twenty `q` parameters per call
+  and answers with an ordered array: **470 requests for ~10 000 strings**
+  instead of 10 000 calls. A first attempt at one call per string hit HTTP 429
+  after ~2 000 requests; the batch path does not.
+- **Results are cached** in `tools/i18n/.mt_cache.json` (gitignored), so a
+  re-run only asks for keys it has never seen and costs zero requests.
+- **Two keys bypass the translator:** `ble_placeholder_interval` (`200-1000`) is
+  identical everywhere, and `nfc_phone_placeholder` follows the country, not
+  the language — `+49 …` in German, `+86 …` in Chinese, `+20 …` in Arabic,
+  `+351 …` in Portuguese, and so on.
+
+Treat the output as a solid first pass, not as a literary translation. The
+strings that matter most (consent screen, destructive-action warnings) were
+already translated by hand in 3.0–3.5 and were not touched.
+
+---
+
 # Dolphy Enhanced — 3.5
 
 `versionCode 35` · `versionName 3.5-enhanced`
@@ -334,14 +392,16 @@ address instead of leaving the user to guess who made the radio.
 
 ## Roadmap (next)
 
-1. **Extract the 361 hardcoded Russian literals** from 37 Kotlin files into
-   resources — this is the last real blocker for full localisation.
-2. **Search in the Functions screen** — the grid has no filter today; with 40+
-   modules that hurts.
-3. **Move the 94 MB IR database to a downloadable pack** — it is 90% of the APK.
-4. **Delete the 354 dead string keys** reported by `check_coverage.py`.
-5. **AI module generator**: an OpenAI-compatible client (configurable base URL +
-   key stored locally) that emits a `.dolphyplugin` scaffold from a prompt. Not
-   shipped yet: it needs a provider endpoint and a review step before generated
-   code can be installed, and shipping it half-done would be worse than not
-   shipping it.
+1. **Extract the ~356 hardcoded Russian literals** from 37 Kotlin files into
+   resources — the last real blocker for full localisation. The worst offenders
+   are `IRRemotesScreen.kt` (50), `MyCamEngine.kt` and `NfcTrolls.kt` (32 each).
+   These strings ignore the language picker entirely, so this matters more than
+   any missing translation.
+2. **Review the machine translations** where a wrong word is expensive: error
+   dialogs, destructive-action confirmations, the consent screen. The cache in
+   `tools/i18n/.mt_cache.json` makes a targeted fix cheap.
+3. **Delete the 354 dead string keys** reported by `check_coverage.py`.
+
+Done since 2.7: function search (2.8), IR pack externalised (3.3, APK 63 → 38
+MB), AI module generator with provider presets (2.9/3.4), NFC card database
+(90 entries), OUI lookup, streaming wordlists, 16 complete locales (3.6).

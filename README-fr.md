@@ -15,8 +15,9 @@ root.
 
 ## Ce que cette fourche ajoute
 
-- **15 langues** correctement câblées : `values/` contient l'anglais, donc une
-  langue partiellement traduite retombe sur l'anglais et non sur le russe.
+- **16 langues, toutes complètes** : `values/` contient l'anglais, donc une
+  langue partiellement traduite retombe sur l'anglais et non sur le russe. Les
+  seize locales portent désormais les 1155 clés.
   Sélecteur avec recherche, noms natifs, support RTL (arabe), mode
   « comme le système ». *(English · Русский · Français · Español · Deutsch ·
   Italiano · Português · Türkçe · Українська · Polski · العربية · हिन्दी ·

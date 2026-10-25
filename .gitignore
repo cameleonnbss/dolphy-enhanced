@@ -16,3 +16,6 @@
 # release artifacts
 *.apk
 Dolphy-Enhanced-*.apk
+
+# machine translation cache (tools/i18n/machine_translate.py)
+tools/i18n/.mt_cache.json
