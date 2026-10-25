@@ -18,8 +18,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      # Hosted runners ship the SDK; the setup-android action fails on license
+      # acceptance, so accept them directly and add the platform if missing.
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platforms;android-36" "build-tools;36.0.0" > /dev/null 2>&1 || true
 
       # The repository ships only gradlew.bat (Windows), so CI uses a real
       # Gradle install instead of the wrapper script.
