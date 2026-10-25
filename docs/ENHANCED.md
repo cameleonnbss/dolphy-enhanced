@@ -1,3 +1,49 @@
+# Dolphy Enhanced — 3.3
+
+`versionCode 33` · `versionName 3.3-enhanced`
+
+## APK: 51 MB → 38 MB, and two real bugs found on the way
+
+Moving the IR database out of the APK started as a size optimisation. Comparing
+the APK contents with `app/src/main/assets` exposed something else.
+
+**The APK contained 1883 of the 8834 `.ir` files.** Everything under
+`_Converted_/` — 6946 remotes — was never packaged. The directory name starts
+with an underscore, and aapt2 drops those. So the "Standard Flipper Database"
+category, advertised in the catalogue since 2.x, was empty in every release.
+
+**`Flipper-IRDB-main/ИК глушилка/IRjammer.ir` was missing too** — the same
+underscore/encoding family of problem on a Cyrillic path. The IR Jammer module
+opened with no signals to send. It is now bundled at `assets/ir_jammer/IRjammer.ir`
+(92 KB) and verified present in the built APK.
+
+### What changed
+
+- `IrPackStore` (new): reads `filesDir/irpack` first, falls back to APK assets.
+  `IrRepository` now goes through it for `list`, `exists` and `open`, so no call
+  site has to know where a remote lives.
+- `IRFlipperHome` shows a download screen when the database is absent: size,
+  explanation, progress bar, error message. After install the index caches are
+  invalidated and the list reloads without restarting the app.
+- The pack itself is a release asset: `ir-pack-v1` → `ir-pack.zip`, 18 MB,
+  8834 files, extracted with a zip-slip check (entries escaping the target
+  directory are skipped).
+- `tv_best_remotes` (1245 TV remotes) stays bundled, so TV control works offline
+  out of the box.
+
+### Size, measured
+
+| Version | APK |
+|---|---|
+| 3.1 | 63 MB |
+| 3.2 | 51 MB |
+| 3.3 | 38 MB |
+
+Remaining: Chaquopy 13.4 MB (plugin runtime), dex 12.2 MB (R8-shrunk), ARM libs
+6.7 MB, `tv_best_remotes` + firmware assets ~5 MB.
+
+---
+
 # Dolphy Enhanced — 3.2
 
 `versionCode 32` · `versionName 3.2-enhanced`

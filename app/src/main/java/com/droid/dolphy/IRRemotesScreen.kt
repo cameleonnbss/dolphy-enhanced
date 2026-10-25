@@ -35,6 +35,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -84,6 +85,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -382,13 +384,8 @@ object IrRepository {
     private val resolvedAssetCache = mutableMapOf<String, String>()
 
 
-    private fun listAssets(context: Context, path: String): List<String> {
-        return try {
-            context.assets.list(path)?.toList() ?: emptyList()
-        } catch (_: Exception) {
-            emptyList()
-        }
-    }
+    private fun listAssets(context: Context, path: String): List<String> =
+        IrPackStore.list(context, path)
 
     private fun rc5ToPattern(address: Int, command: Int, toggle: Int = 0): IntArray {
         val bits = mutableListOf(1, 1, toggle)
@@ -779,9 +776,10 @@ object IrRepository {
 
         for (candidate in candidates) {
             try {
-                context.assets.open(candidate).close()
-                resolvedAssetCache[requestedPath] = candidate
-                return candidate
+                if (IrPackStore.exists(context, candidate)) {
+                    resolvedAssetCache[requestedPath] = candidate
+                    return candidate
+                }
             } catch (_: Exception) {
 
             }
@@ -799,22 +797,13 @@ object IrRepository {
     }
 
     private fun findAssetByName(context: Context, fileName: String, dir: String): String? {
-        val entries = try {
-            context.assets.list(dir)?.toList() ?: emptyList()
-        } catch (_: Exception) {
-            emptyList()
-        }
+        val entries = IrPackStore.list(context, dir)
         for (entry in entries) {
             val path = if (dir.isBlank()) entry else "$dir/$entry"
             if (entry.equals(fileName, ignoreCase = true)) {
-                try {
-                    context.assets.open(path).close()
-                    return path
-                } catch (_: Exception) {
-
-                }
+                if (IrPackStore.exists(context, path)) return path
             }
-            val children = try { context.assets.list(path) } catch (_: Exception) { null }
+            val children = IrPackStore.list(context, path).ifEmpty { null }
             if (!children.isNullOrEmpty()) {
                 val found = findAssetByName(context, fileName, path)
                 if (found != null) return found
@@ -830,7 +819,8 @@ object IrRepository {
             return emptyList()
         }
         val text = try {
-            context.assets.open(resolvedPath).bufferedReader(Charsets.UTF_8).use { it.readText() }
+            IrPackStore.open(context, resolvedPath)?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }
+                ?: error("remote not found: $resolvedPath")
         } catch (e: Exception) {
             Log.e("IrRepository", "Failed to read asset $resolvedPath (requested $assetPath): ${e.message}")
             return emptyList()
@@ -944,6 +934,18 @@ object IrRepository {
                 Log.w("IrRepository", "warmIndex: ${e.message}")
             }
         }, "ir-index-warm").start()
+    }
+
+    /** Called after the IR pack is installed so the next read sees the new files. */
+    fun clearCaches(context: Context) {
+        tvIndexCache = null
+        flIndexCache = null
+        buttonsCache.clear()
+        resolvedAssetCache.clear()
+        try {
+            java.io.File(context.filesDir, "ir_flipper_index_v1.txt").delete()
+        } catch (_: Exception) {
+        }
     }
 
     fun loadButtons(context: Context, assetPath: String): List<IrButton> {
@@ -1183,10 +1185,11 @@ fun IRFlipperHome(navController: NavController) {
     val context = LocalContext.current
     val res = context.resources
     var categories by remember { mutableStateOf<List<String>?>(null) }
+    var packReloadKey by remember { mutableStateOf(0) }
     var searchQuery by remember { mutableStateOf("") }
     var searchResults by remember { mutableStateOf<List<FlipperSearchResult>>(emptyList()) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(packReloadKey) {
         withContext(Dispatchers.IO) {
             categories = IrRepository.getFlipperIndex(context).keys
                 .map { it.substringBefore('/') }
@@ -1214,7 +1217,11 @@ fun IRFlipperHome(navController: NavController) {
     }
 
     if (categories!!.isEmpty()) {
-        SimpleMessageScreen(stringResource(R.string.ir_flipper_db_not_found))
+        if (IrPackStore.isInstalled(context)) {
+            SimpleMessageScreen(stringResource(R.string.ir_flipper_db_not_found))
+        } else {
+            IrPackMissingScreen(onInstalled = { packReloadKey++ })
+        }
         return
     }
     val accent = MaterialTheme.colorScheme.primary
@@ -3439,6 +3446,85 @@ private fun SimpleListScreen(
     }
 }
 
+/**
+ * Shown when the Flipper IR database is not on the device. The database is a
+ * 12 MB download instead of being shipped inside every APK.
+ */
+@Composable
+private fun IrPackMissingScreen(onInstalled: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var progress by remember { mutableStateOf(-1) }
+    var error by remember { mutableStateOf<String?>(null) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(
+            imageVector = Icons.Default.CloudDownload,
+            contentDescription = null,
+            modifier = Modifier.size(56.dp),
+            tint = MaterialTheme.colorScheme.primary,
+        )
+        Spacer(Modifier.size(16.dp))
+        Text(
+            text = stringResource(R.string.ir_pack_title),
+            style = MaterialTheme.typography.titleLarge,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(Modifier.size(8.dp))
+        Text(
+            text = stringResource(R.string.ir_pack_body),
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.size(24.dp))
+        if (progress in 0..100) {
+            LinearProgressIndicator(
+                progress = { progress / 100f },
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(Modifier.size(8.dp))
+            Text(text = "$progress %", style = MaterialTheme.typography.labelMedium)
+        } else {
+            Button(onClick = {
+                progress = 0
+                error = null
+                scope.launch {
+                    val outcome = withContext(Dispatchers.IO) {
+                        runCatching {
+                            IrPackStore.install(context) { value -> progress = value }
+                        }
+                    }
+                    progress = -1
+                    outcome.onSuccess {
+                        IrRepository.clearCaches(context)
+                        onInstalled()
+                    }.onFailure { throwable ->
+                        error = throwable.message ?: throwable.javaClass.simpleName
+                    }
+                }
+            }) {
+                Text(stringResource(R.string.ir_pack_download))
+            }
+        }
+        error?.let { message ->
+            Spacer(Modifier.size(16.dp))
+            Text(
+                text = stringResource(R.string.ir_pack_failed, message),
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+}
+
 @Composable
 private fun SimpleMessageScreen(message: String) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.Center) {
@@ -3895,7 +3981,7 @@ fun IRJammerScreen(navController: NavController? = null) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val accentColor = MaterialTheme.colorScheme.primary
-    val jammerAssetPath = "Flipper-IRDB-main/ИК глушилка/IRjammer.ir"
+    val jammerAssetPath = "ir_jammer/IRjammer.ir"
 
     var buttons by remember { mutableStateOf<List<IrButton>?>(null) }
     var sourceLabel by remember { mutableStateOf("IRjammer.ir") }
