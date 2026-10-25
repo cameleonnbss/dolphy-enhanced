@@ -34,8 +34,8 @@ android {
         applicationId = "com.droid.dolphy"
         minSdk = 26
         targetSdk = 36
-        versionCode = 30
-        versionName = "3.0-enhanced"
+        versionCode = 31
+        versionName = "3.1-enhanced"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

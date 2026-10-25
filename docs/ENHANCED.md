@@ -1,3 +1,37 @@
+# Dolphy Enhanced — 3.1
+
+`versionCode 31` · `versionName 3.1-enhanced`
+
+## French is complete: 1150/1150
+
+`values-fr` started at 118 keys — the core navigation strings — while `values/`
+(English) held 1150 and `values-ru` held the full original set. That meant a
+French user saw French menus and English everything else, which is the worst of
+both worlds.
+
+All 1032 missing keys are now translated: NFC (read, write, emulate, card
+database, EMV analysis), BLE (spam lists, advertise presets, smart home), IR
+(categories, brands, favourites, jammer, universal remotes), HID (keyboard,
+touchpad, DuckyScript import, BlueDucky notes), LAN (scanner, camera search,
+router actions, MITM log), Wi-Fi (printing over IPP, brute force), plugins
+(preview, capabilities, safe mode), passport, chat, QR, serial terminal,
+ScooterHack, CamCatch, WhisperPair, onboarding, privacy setup and the Flipper
+launcher screens.
+
+Details that matter in a real translation:
+- typographic apostrophes escaped the way aapt2 expects (`\'`), not `&#39;`
+- `+33 …` instead of the Russian `+7 …` in the phone placeholder
+- plural-free phrasing where French would need agreement with an unknown count
+- `Wi‑Fi` with a non-breaking hyphen, matching the English source
+- placeholders (`%1$s`, `%2$d`, `%1$04X`) verified positionally
+
+`tools/i18n/check_coverage.py --strict` reports `fr 1150 100.0%`.
+
+The other fourteen locales still carry the 118 core keys and fall back to English
+for the rest — that is the next batch.
+
+---
+
 # Dolphy Enhanced — 3.0
 
 `versionCode 30` · `versionName 3.0-enhanced` · based on Dolphy 2.6 (GPL v3)
