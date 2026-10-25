@@ -1,3 +1,33 @@
+# Dolphy Enhanced — 3.5
+
+`versionCode 35` · `versionName 3.5-enhanced`
+
+## Spanish joins French at 100%
+
+`values-es` went from 118 keys to 1155, the same treatment French got in 3.1:
+every screen, including the ones added since (IR pack download, plugins card).
+
+| Locale | Before | After |
+|---|---|---|
+| English (`values`) | 1155 | 1155 |
+| Russian | 1155 | 1155 |
+| French | 1155 | 1155 |
+| Spanish | 118 | **1155** |
+| 11 others | 118 | 122 |
+
+The four IR-pack strings and the plugins card description were also translated
+into the eleven remaining locales, so no user meets an English-only dialog in a
+flow they can actually reach. The rest of those locales still fall back to
+English — that is the remaining work, and it is 1033 keys × 11 languages.
+
+Translation decisions worth knowing for the next pass:
+- Spanish uses `«»` for quotes, `¡…!`/`¿…?` where the sentence needs it, and
+  `+34 …` in the phone placeholder instead of `+33`/`+7`.
+- `Wi‑Fi` keeps the non-breaking hyphen (U+2011) in every locale.
+- Numbers stay in the `%1$s` / `%2$d` positional form — no reordering.
+
+---
+
 # Dolphy Enhanced — 3.4
 
 `versionCode 34` · `versionName 3.4-enhanced`

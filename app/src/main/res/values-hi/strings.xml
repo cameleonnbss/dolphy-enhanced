@@ -124,4 +124,9 @@
     <string name="ai_install">प्लगइन इंस्टॉल करें</string>
     <string name="ai_installed">इंस्टॉल हुआ: %1$s</string>
     <string name="ai_saved">प्रदाता सहेजा गया</string>
+    <string name="ir_pack_title">IR डेटाबेस डाउनलोड नहीं हुआ</string>
+    <string name="ir_pack_body">Flipper रिमोट डेटाबेस (12 MB, 10,000 से अधिक रिमोट) अलग से डाउनलोड होता है ताकि ऐप हल्का रहे। एक बार डाउनलोड करें — यह डिवाइस पर रहता है।</string>
+    <string name="ir_pack_download">डेटाबेस डाउनलोड करें (12 MB)</string>
+    <string name="ir_pack_failed">डाउनलोड विफल: %1$s</string>
+    <string name="plugin_manager_short_desc">मॉड्यूल इंस्टॉल और प्रबंधित करें (.dolphyplugin)</string>
 </resources>

@@ -15,9 +15,10 @@ No root required for most modules.
 
 ## What this fork adds
 
-### 15 languages, properly wired
+### 16 languages, three of them complete
 `values/` is English (the fallback), so a partially translated locale degrades to
-English instead of Russian. A searchable language picker, native language names,
+English instead of Russian. English, Russian, French and Spanish are complete
+(1155 keys each); the other twelve carry the 122 highest-traffic strings. A searchable language picker, native language names,
 RTL support for Arabic, and a "follow the system" mode.
 
 `English · Русский · Français · Español · Deutsch · Italiano · Português ·

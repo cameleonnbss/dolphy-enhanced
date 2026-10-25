@@ -124,4 +124,9 @@
     <string name="ai_install">تثبيت الإضافة</string>
     <string name="ai_installed">تم التثبيت: %1$s</string>
     <string name="ai_saved">تم حفظ المزوّد</string>
+    <string name="ir_pack_title">لم يتم تنزيل قاعدة IR</string>
+    <string name="ir_pack_body">قاعدة أجهزة تحكم Flipper (12 ميغابايت، أكثر من 10000 جهاز) تُنزَّل بشكل منفصل ليبقى التطبيق خفيفًا. نزّلها مرة واحدة وتبقى على الجهاز.</string>
+    <string name="ir_pack_download">تنزيل القاعدة (12 ميغابايت)</string>
+    <string name="ir_pack_failed">فشل التنزيل: %1$s</string>
+    <string name="plugin_manager_short_desc">تثبيت الوحدات وإدارتها (.dolphyplugin)</string>
 </resources>

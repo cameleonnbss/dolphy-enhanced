@@ -124,4 +124,9 @@
     <string name="ai_install">プラグインをインストール</string>
     <string name="ai_installed">インストール済み: %1$s</string>
     <string name="ai_saved">プロバイダーを保存しました</string>
+    <string name="ir_pack_title">IR データベース未ダウンロード</string>
+    <string name="ir_pack_body">Flipper のリモコンデータベース（12 MB、10 000 件以上）はアプリを軽く保つため別途ダウンロードします。一度ダウンロードすれば端末に保存されます。</string>
+    <string name="ir_pack_download">データベースをダウンロード（12 MB）</string>
+    <string name="ir_pack_failed">ダウンロード失敗: %1$s</string>
+    <string name="plugin_manager_short_desc">モジュールのインストールと管理（.dolphyplugin）</string>
 </resources>

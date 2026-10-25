@@ -35,6 +35,9 @@ jobs:
       - name: Translation coverage check
         run: python3 tools/i18n/check_coverage.py --strict
 
+      - name: String escaping check
+        run: python3 tools/i18n/check_escaping.py --strict
+
       - name: Assemble debug APK
         run: gradle :app:assembleDebug --stacktrace --no-daemon
 
