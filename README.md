@@ -84,8 +84,32 @@ plugin-examples/                        .dolphyplugin samples
 
 - [`docs/ENHANCED.md`](docs/ENHANCED.md) — what changed in 2.7, roadmap, and what
   is deliberately out of scope.
+- [`docs/MODULE-ROADMAP.md`](docs/MODULE-ROADMAP.md) — the full module roadmap.
 - [`docs/ADD-A-MODULE.md`](docs/ADD-A-MODULE.md) — extend the app.
-- [`docs/IMPROVEMENTS.md`](docs/IMPROVEMENTS.md) — 2.6 i18n/wordlist work.
+
+This README is also available in:
+[Français](README-fr.md) · [Español](README-es.md) · [Deutsch](README-de.md) ·
+[Русский](README-ru.md) · [中文](README-zh.md)
+
+## Releases
+
+Debug builds are produced by CI on every push to `main` (see
+`.github/workflows/build.yml`). To cut a tagged release:
+
+```bash
+git tag -a v2.8 -m "Dolphy Enhanced 2.8"
+git push origin v2.8
+```
+
+Suggested release description:
+
+> **Dolphy Enhanced 2.8**
+> First-launch usage gate · Functions screen search · new adaptive icon ·
+> OUI manufacturer database (335 prefixes) · 15 languages with English as the
+> fallback · streaming wordlists + generated patterns · NFC/RFID card database
+> (37 families) · root detection with manager and version · README in 5
+> languages.
+> Educational and authorised targets only.
 
 ## Licence
 

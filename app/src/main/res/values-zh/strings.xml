@@ -92,4 +92,21 @@
     <string name="settings_root_checking">正在检测…</string>
     <string name="settings_root_yes">已检测到 Root</string>
     <string name="settings_root_no">无 Root</string>
+    <string name="consent_title">仅用于教育与授权测试</string>
+    <string name="consent_body">Dolphy Enhanced 是一个用于无线协议、NFC/RFID 与硬件模拟的研究与教学工具。
+
+所有模块均用于教育目的，以及测试你拥有或明确获准测试的设备。将本应用用于第三方设备或网络，以干扰、截获或冒充它们，在大多数国家属于违法行为。
+
+作者与贡献者不对滥用行为承担任何责任。继续即表示你确认已成年，只会在获准测试的系统上使用本应用，并接受这些条款。</string>
+    <string name="consent_note">不会有任何数据离开你的设备：无账户、无统计、无追踪。</string>
+    <string name="consent_accept">我已阅读并同意</string>
+    <string name="consent_exit">退出</string>
+    <string name="settings_consent_row">使用条款</string>
+    <string name="functions_search_hint">搜索功能</string>
+    <string name="ir_flipper_extra_tv">电视</string>
+    <string name="ble_spam_title">BLE 骚扰</string>
+    <string name="ble_spam_desc">向 Apple、Android、Windows 和三星发送配对请求</string>
+    <string name="bond_spam_title">Bond 骚扰</string>
+    <string name="bond_spam_desc">蓝牙经典配对请求洪水</string>
+    <string name="oui_vendor">厂商</string>
 </resources>

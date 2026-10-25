@@ -704,6 +704,7 @@ class MainActivity : ComponentActivity() {
             val accentColor by spamViewModel.accentColor.collectAsState()
             val isAdaptiveColor by spamViewModel.isAdaptiveColor.collectAsState()
             val onboardingCompleted by spamViewModel.onboardingCompleted.collectAsState()
+            val consentAccepted by spamViewModel.consentAccepted.collectAsState()
             val flipperFontEnabled by spamViewModel.flipperFontEnabled.collectAsState()
             val flipperFontScale by spamViewModel.flipperFontScale.collectAsState()
             val animatedBackgroundEnabled by spamViewModel.animatedBackgroundEnabled.collectAsState()
@@ -738,6 +739,11 @@ class MainActivity : ComponentActivity() {
                 if (showSplash) {
                     SplashScreen(
                         onSplashComplete = { showSplash = false }
+                    )
+                } else if (!consentAccepted) {
+                    UsageConsentScreen(
+                        onAccept = { spamViewModel.acceptConsent() },
+                        onExit = { finish() },
                     )
                 } else {
                     MainScreen(spamViewModel, dolphyViewModel, nfcViewModel, pendingNavRoute, pendingPluginUri)
@@ -3815,6 +3821,29 @@ fun SettingsScreen(spamViewModel: SpamViewModel, dolphyViewModel: DolphyViewMode
                                 }
                             }
                             MaterialDivider()
+                            SettingsItem(onClick = {
+                                spamViewModel.resetConsent()
+                                android.widget.Toast.makeText(
+                                    context,
+                                    R.string.settings_consent_row,
+                                    android.widget.Toast.LENGTH_SHORT
+                                ).show()
+                            }) {
+                                Icon(
+                                    Icons.Default.Description,
+                                    null,
+                                    tint = accentColor,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(Modifier.width(12.dp))
+                                Text(
+                                    stringResource(R.string.settings_consent_row),
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                                Spacer(Modifier.weight(1f))
+                                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            MaterialDivider()
                             SettingsItem(onClick = { uriHandler.openUri(About.AUTHOR_GITHUB) }) {
                                 Icon(Icons.Default.Person, null, tint = accentColor, modifier = Modifier.size(24.dp))
                                 Spacer(Modifier.width(12.dp))
@@ -5932,6 +5961,21 @@ class SpamViewModel(private val application: Application) : AndroidViewModel(app
 
     private val _onboardingCompleted = MutableStateFlow(prefs.getBoolean("onboarding_completed", false))
     val onboardingCompleted = _onboardingCompleted.asStateFlow()
+
+    private val _consentAccepted = MutableStateFlow(prefs.getBoolean("consent_accepted", false))
+    val consentAccepted = _consentAccepted.asStateFlow()
+
+    /** Stores the first-launch usage consent. Called once, from the gate screen. */
+    fun acceptConsent() {
+        prefs.edit { putBoolean("consent_accepted", true) }
+        _consentAccepted.value = true
+    }
+
+    /** Lets a user re-read the gate from Settings → About. */
+    fun resetConsent() {
+        prefs.edit { putBoolean("consent_accepted", false) }
+        _consentAccepted.value = false
+    }
 
     private val _lastSeenVersion = MutableStateFlow(prefs.getString("last_seen_version", ""))
     val lastSeenVersion = _lastSeenVersion.asStateFlow()

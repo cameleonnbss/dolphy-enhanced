@@ -1312,3 +1312,170 @@ for _tag, _values in _ENHANCED.items():
         TRANSLATIONS[_tag][_key] = _value
 
 CORE_KEYS += _ENHANCED_KEYS
+
+# ---------------------------------------------------------------------------
+# First-launch usage consent.
+# ---------------------------------------------------------------------------
+_CONSENT_KEYS = [
+    "consent_title", "consent_body", "consent_note", "consent_accept", "consent_exit",
+]
+
+_BODY_FR = "Dolphy Enhanced est un outil de recherche et d'éducation pour les protocoles sans fil, le NFC/RFID et l'émulation matérielle.\n\nChaque module est fourni à but éducatif et pour tester du matériel que vous possédez ou que vous êtes explicitement autorisé à tester. Utiliser cette application contre des appareils ou des réseaux tiers, pour les perturber, intercepter ou usurper, est illégal dans la plupart des pays.\n\nLes auteurs et contributeurs n'assument aucune responsabilité en cas de mauvais usage. En continuant, vous confirmez être majeur, n'utiliser cette application que sur des systèmes que vous avez le droit de tester, et accepter ces conditions."
+_BODY_ES = "Dolphy Enhanced es una herramienta de investigación y educación para protocolos inalámbricos, NFC/RFID y emulación de hardware.\n\nCada módulo se ofrece con fines educativos y para probar equipos que te pertenecen o que estás explícitamente autorizado a probar. Usar esta aplicación contra dispositivos o redes de terceros, para perturbarlos, interceptarlos o suplantarlos, es ilegal en la mayoría de los países.\n\nLos autores y colaboradores no asumen ninguna responsabilidad por el mal uso. Al continuar confirmas ser mayor de edad, usar la aplicación solo en sistemas que puedes probar y aceptar estas condiciones."
+_BODY_DE = "Dolphy Enhanced ist ein Forschungs- und Lernwerkzeug für Funkprotokolle, NFC/RFID und Hardware-Emulation.\n\nJedes Modul dient Lernzwecken und dem Testen von Geräten, die dir gehören oder die du ausdrücklich testen darfst. Der Einsatz gegen fremde Geräte oder Netze, um sie zu stören, abzufangen oder zu täuschen, ist in den meisten Ländern illegal.\n\nAutoren und Mitwirkende übernehmen keine Verantwortung für Missbrauch. Mit dem Fortfahren bestätigst du, volljährig zu sein, die App nur auf prüfbaren Systemen einzusetzen und diese Bedingungen zu akzeptieren."
+_BODY_IT = "Dolphy Enhanced è uno strumento di ricerca e didattica per protocolli radio, NFC/RFID ed emulazione hardware.\n\nOgni modulo è fornito a scopo didattico e per testare apparecchi di tua proprietà o che sei esplicitamente autorizzato a testare. Usare questa app contro dispositivi o reti di terzi, per disturbarli, intercettarli o impersonarli, è illegale nella maggior parte dei paesi.\n\nAutori e collaboratori non si assumono alcuna responsabilità per un uso improprio. Continuando confermi di essere maggiorenne, di usare l'app solo su sistemi che puoi testare e di accettare queste condizioni."
+_BODY_PT = "O Dolphy Enhanced é uma ferramenta de investigação e educação para protocolos sem fios, NFC/RFID e emulação de hardware.\n\nCada módulo é fornecido para fins educativos e para testar equipamentos que possuis ou que estás explicitamente autorizado a testar. Usar esta aplicação contra dispositivos ou redes de terceiros, para os perturbar, intercetar ou personificar, é ilegal na maioria dos países.\n\nOs autores e colaboradores não assumem qualquer responsabilidade por uso indevido. Ao continuares confirmas ser maior de idade, usar a aplicação apenas em sistemas que podes testar e aceitar estes termos."
+_BODY_TR = "Dolphy Enhanced, kablosuz protokoller, NFC/RFID ve donanım emülasyonu için bir araştırma ve eğitim aracıdır.\n\nHer modül eğitim amaçlı ve sahibi olduğunuz ya da test etmeye açıkça yetkili olduğunuz ekipmanları test etmek için sunulmuştur. Bu uygulamayı üçüncü taraf cihazlara veya ağlara karşı kullanmak, onları bozmak, yakalamak veya taklit etmek çoğu ülkede yasa dışıdır.\n\nYazarlar ve katkıcılar kötüye kullanımdan sorumlu tutulamaz. Devam ederek reşit olduğunuzu, uygulamayı yalnızca test etme yetkisine sahip olduğunuz sistemlerde kullanacağınızı ve bu koşulları kabul ettiğinizi onaylarsınız."
+_BODY_UK = "Dolphy Enhanced — дослідницький і навчальний інструмент для бездротових протоколів, NFC/RFID та емуляції обладнання.\n\nКожен модуль надається в освітніх цілях і для тестування обладнання, яким ви володієте або тестування якого вам дозволено. Використання програми проти чужих пристроїв і мереж, для їхнього порушення, перехоплення або підміни, незаконне в більшості країн.\n\nАвтори та учасники не несуть відповідальності за неправомірне використання. Продовжуючи, ви підтверджуєте, що досягли повноліття, використовуватимете програму лише на системах, які можете тестувати, та приймаєте ці умови."
+_BODY_PL = "Dolphy Enhanced to narzędzie badawcze i edukacyjne do protokołów radiowych, NFC/RFID i emulacji sprzętu.\n\nKażdy moduł służy celom edukacyjnym i testowaniu urządzeń, które posiadasz lub do testowania których jesteś wyraźnie upoważniony. Używanie aplikacji przeciwko urządzeniom lub sieciom osób trzecich, aby je zakłócać, przechwytywać lub podszywać się pod nie, jest nielegalne w większości krajów.\n\nAutorzy i współtwórcy nie ponoszą odpowiedzialności za nadużycia. Kontynuując potwierdzasz, że jesteś pełnoletni, używasz aplikacji tylko na systemach, które możesz testować, i akceptujesz te warunki."
+_BODY_AR = "Dolphy Enhanced أداة بحث وتعليم للبروتوكولات اللاسلكية وتقنيات NFC/RFID ومحاكاة العتاد.\n\nكل وحدة متاحة لأغراض تعليمية ولاختبار أجهزة تملكها أو لديك تصريح صريح باختبارها. استخدام هذا التطبيق ضد أجهزة أو شبكات الآخرين، لتعطيلها أو اعتراضها أو انتحالها، غير قانوني في معظم البلدان.\n\nلا يتحمل المؤلفون والمساهمون أي مسؤولية عن سوء الاستخدام. بالمتابعة تؤكد أنك بالغ، وأنك ستستخدم التطبيق فقط على أنظمة يحق لك اختبارها، وأنك تقبل هذه الشروط."
+_BODY_HI = "Dolphy Enhanced एक शोध और शिक्षा उपकरण है जो वायरलेस प्रोटोकॉल, NFC/RFID और हार्डवेयर एमुलेशन के लिए है।\n\nप्रत्येक मॉड्यूल शैक्षणिक उद्देश्यों और उन उपकरणों के परीक्षण के लिए है जिनके मालिक हैं या जिनका परीक्षण करने की स्पष्ट अनुमति है। किसी तीसरे पक्ष के उपकरणों या नेटवर्क पर इस ऐप का उपयोग उन्हें बाधित करने, रोकने या नकल करने के लिए अधिकांश देशों में गैरकानूनी है।\n\nलेखक और योगदानकर्ता दुरुपयोग के लिए कोई ज़िम्मेदारी स्वीकार नहीं करते। जारी रखकर आप पुष्टि करते हैं कि आप वयस्क हैं, इस ऐप का उपयोग केवल उन सिस्टमों पर करेंगे जिनका परीक्षण करने की अनुमति है, और इन शर्तों से सहमत हैं।"
+_BODY_ID = "Dolphy Enhanced adalah alat riset dan edukasi untuk protokol nirkabel, NFC/RFID, dan emulasi perangkat keras.\n\nSetiap modul disediakan untuk tujuan edukasi dan menguji perangkat yang kamu miliki atau yang secara eksplisit kamu izinkan mengujinya. Menggunakan aplikasi ini terhadap perangkat atau jaringan pihak lain, untuk mengganggu, mencegat, atau menirunya, adalah ilegal di sebagian besar negara.\n\nPenulis dan kontributor tidak bertanggung jawab atas penyalahgunaan. Dengan melanjutkan kamu mengonfirmasi bahwa kamu dewasa, akan menggunakan aplikasi ini hanya pada sistem yang boleh kamu uji, dan menerima ketentuan ini."
+_BODY_ZH = "Dolphy Enhanced 是一个用于无线协议、NFC/RFID 与硬件模拟的研究与教学工具。\n\n所有模块均用于教育目的，以及测试你拥有或明确获准测试的设备。将本应用用于第三方设备或网络，以干扰、截获或冒充它们，在大多数国家属于违法行为。\n\n作者与贡献者不对滥用行为承担任何责任。继续即表示你确认已成年，只会在获准测试的系统上使用本应用，并接受这些条款。"
+_BODY_JA = "Dolphy Enhanced は無線プロトコル、NFC/RFID、ハードウェアエミュレーションのための研究・教育ツールです。\n\n各モジュールは教育目的、および所有または明示的に許可された機器のテストのために提供されます。第三者の機器やネットワークに対して、妨害・傍受・なりすましを行う用途は多くの国で違法です。\n\n作者と貢献者は悪用に対する責任を負いません。続行すると、あなたは成人であり、テストを許可されたシステムにのみ本アプリを使用し、これらの条件に同意したものとみなされます。"
+_BODY_KO = "Dolphy Enhanced는 무선 프로토콜, NFC/RFID, 하드웨어 에뮬레이션을 위한 연구·교육 도구입니다.\n\n모든 모듈은 교육 목적과 소유했거나 명시적으로 테스트 허가를 받은 장비의 테스트를 위해 제공됩니다. 타인의 기기나 네트워크를 방해하거나 가로채거나 위장하는 용도로 이 앱을 사용하는 것은 대부분의 국가에서 불법입니다.\n\n저자와 기여자는 오용에 대한 책임을 지지 않습니다. 계속하면 귀하는 성인이며, 테스트가 허용된 시스템에만 이 앱을 사용하고 이 조건에 동의함을 확인합니다."
+
+_CONSENT: dict[str, tuple[str, str, str, str, str]] = {
+    "fr": ("Usage éducatif et autorisé uniquement", _BODY_FR,
+           "Rien ne quitte votre appareil : ni compte, ni analytique, ni suivi.",
+           "J'ai lu et j'accepte", "Quitter"),
+    "es": ("Solo uso educativo y autorizado", _BODY_ES,
+           "Nada sale de tu dispositivo: sin cuenta, sin analítica, sin seguimiento.",
+           "He leído y acepto", "Salir"),
+    "de": ("Nur Bildungszwecke und autorisierte Nutzung", _BODY_DE,
+           "Nichts verlässt dein Gerät: kein Konto, keine Analytik, kein Tracking.",
+           "Ich habe gelesen und stimme zu", "Beenden"),
+    "it": ("Solo uso didattico e autorizzato", _BODY_IT,
+           "Nulla lascia il tuo dispositivo: nessun account, nessuna analisi, nessun tracciamento.",
+           "Ho letto e accetto", "Esci"),
+    "pt": ("Apenas uso educativo e autorizado", _BODY_PT,
+           "Nada sai do teu dispositivo: sem conta, sem análise, sem rastreio.",
+           "Li e aceito", "Sair"),
+    "tr": ("Yalnızca eğitim ve yetkili kullanım", _BODY_TR,
+           "Cihazınızdan hiçbir şey çıkmaz: hesap yok, analitik yok, takip yok.",
+           "Okudum ve kabul ediyorum", "Çıkış"),
+    "uk": ("Лише для навчання та авторизованого використання", _BODY_UK,
+           "Нічого не залишає ваш пристрій: ні акаунта, ні аналітики, ні відстеження.",
+           "Я прочитав і згоден", "Вихід"),
+    "pl": ("Tylko do nauki i autoryzowanego użycia", _BODY_PL,
+           "Nic nie opuszcza twojego urządzenia: brak konta, brak analityki, brak śledzenia.",
+           "Przeczytałem i akceptuję", "Wyjdź"),
+    "ar": ("للتعليم والاستخدام المصرّح به فقط", _BODY_AR,
+           "لا شيء يترك جهازك: لا حساب ولا تحليلات ولا تتبّع.",
+           "قرأت وأوافق", "خروج"),
+    "hi": ("केवल शैक्षणिक और अधिकृत उपयोग", _BODY_HI,
+           "आपका डिवाइस कुछ नहीं भेजता: न कोई अकाउंट, न एनालिटिक्स, न ट्रैकिंग।",
+           "मैंने पढ़ा और सहमत हूँ", "बाहर निकलें"),
+    "id": ("Hanya untuk edukasi dan penggunaan resmi", _BODY_ID,
+           "Tidak ada yang keluar dari perangkatmu: tanpa akun, tanpa analitik, tanpa pelacakan.",
+           "Saya sudah membaca dan setuju", "Keluar"),
+    "zh": ("仅用于教育与授权测试", _BODY_ZH,
+           "不会有任何数据离开你的设备：无账户、无统计、无追踪。",
+           "我已阅读并同意", "退出"),
+    "ja": ("教育および許可された用途のみ", _BODY_JA,
+           "デバイスから何も送信されません：アカウントなし、解析なし、追跡なし。",
+           "読んで同意しました", "終了"),
+    "ko": ("교육 및 허가된 사용 전용", _BODY_KO,
+           "기기에서 나가는 것은 없습니다: 계정 없음, 분석 없음, 추적 없음.",
+           "읽었고 동의합니다", "종료"),
+}
+
+for _tag, _values in _CONSENT.items():
+    for _key, _value in zip(_CONSENT_KEYS, _values):
+        TRANSLATIONS[_tag][_key] = _value
+
+CORE_KEYS += _CONSENT_KEYS
+
+# ---------------------------------------------------------------------------
+# Consent row in Settings → About.
+# ---------------------------------------------------------------------------
+_CONSENT_ROW = {
+    "fr": "Conditions d'utilisation",
+    "es": "Condiciones de uso",
+    "de": "Nutzungsbedingungen",
+    "it": "Condizioni d'uso",
+    "pt": "Termos de utilização",
+    "tr": "Kullanım koşulları",
+    "uk": "Умови використання",
+    "pl": "Warunki użytkowania",
+    "ar": "شروط الاستخدام",
+    "hi": "उपयोग की शर्तें",
+    "id": "Ketentuan penggunaan",
+    "zh": "使用条款",
+    "ja": "利用条件",
+    "ko": "이용 약관",
+}
+for _tag, _value in _CONSENT_ROW.items():
+    TRANSLATIONS[_tag]["settings_consent_row"] = _value
+CORE_KEYS += ["settings_consent_row"]
+
+# Search field on the Functions screen.
+_SEARCH_HINT = {
+    "fr": "Rechercher une fonction",
+    "es": "Buscar una función",
+    "de": "Funktion suchen",
+    "it": "Cerca una funzione",
+    "pt": "Procurar uma função",
+    "tr": "İşlev ara",
+    "uk": "Пошук функції",
+    "pl": "Szukaj funkcji",
+    "ar": "ابحث عن وظيفة",
+    "hi": "फ़ंक्शन खोजें",
+    "id": "Cari fungsi",
+    "zh": "搜索功能",
+    "ja": "機能を検索",
+    "ko": "기능 검색",
+}
+for _tag, _value in _SEARCH_HINT.items():
+    TRANSLATIONS[_tag]["functions_search_hint"] = _value
+CORE_KEYS += ["functions_search_hint"]
+
+# Labels extracted from FunctionCatalog.kt (they were hardcoded in Kotlin).
+_CATALOG_KEYS = [
+    "ir_flipper_extra_tv", "ble_spam_title", "ble_spam_desc", "bond_spam_title", "bond_spam_desc",
+]
+_CATALOG: dict[str, tuple[str, str, str, str, str]] = {
+    "fr": ("téléviseurs", "Spam BLE", "Spam de demandes d'appairage Apple, Android, Windows et Samsung",
+           "Spam Bond", "Inondation de demandes d'appairage Bluetooth Classic"),
+    "es": ("televisores", "Spam BLE", "Spam de solicitudes de emparejamiento de Apple, Android, Windows y Samsung",
+           "Spam Bond", "Inundación de solicitudes de emparejamiento Bluetooth Classic"),
+    "de": ("Fernseher", "BLE-Spam", "Spam mit Kopplungsanfragen für Apple, Android, Windows und Samsung",
+           "Bond-Spam", "Flood von Bluetooth-Classic-Kopplungsanfragen"),
+    "it": ("televisori", "Spam BLE", "Spam di richieste di associazione per Apple, Android, Windows e Samsung",
+           "Spam Bond", "Inondazione di richieste di associazione Bluetooth Classic"),
+    "pt": ("televisores", "Spam BLE", "Spam de pedidos de emparelhamento de Apple, Android, Windows e Samsung",
+           "Spam Bond", "Inundação de pedidos de emparelhamento Bluetooth Classic"),
+    "tr": ("televizyonlar", "BLE Spam", "Apple, Android, Windows ve Samsung için eşleştirme isteği spamı",
+           "Bond Spam", "Bluetooth Classic eşleştirme isteği seli"),
+    "uk": ("телевізори", "BLE Спам", "Спам запитами сопряження Apple, Android, Windows і Samsung",
+           "Bond Спам", "Флуд запитами сопряження Bluetooth Classic"),
+    "pl": ("telewizory", "Spam BLE", "Spam żądaniami parowania dla Apple, Android, Windows i Samsung",
+           "Spam Bond", "Zalew żądaniami parowania Bluetooth Classic"),
+    "ar": ("أجهزة التلفاز", "سبام BLE", "سبام طلبات الاقتران لـ Apple و Android و Windows و Samsung",
+           "سبام Bond", "إغراق طلبات اقتران Bluetooth Classic"),
+    "hi": ("टीवी", "BLE स्पैम", "Apple, Android, Windows और Samsung के पेयरिंग अनुरोध स्पैम",
+           "बॉन्ड स्पैम", "Bluetooth Classic पेयरिंग फ्लड"),
+    "id": ("TV", "Spam BLE", "Spam permintaan penyambungan Apple, Android, Windows, dan Samsung",
+           "Spam Bond", "Banjir permintaan penyambungan Bluetooth Classic"),
+    "zh": ("电视", "BLE 骚扰", "向 Apple、Android、Windows 和三星发送配对请求",
+           "Bond 骚扰", "蓝牙经典配对请求洪水"),
+    "ja": ("テレビ", "BLE スパム", "Apple・Android・Windows・Samsung へのペアリング要求スパム",
+           "ボンド スパム", "Bluetooth Classic ペアリング要求フラッド"),
+    "ko": ("TV", "BLE 스팸", "Apple, Android, Windows, Samsung 페어링 요청 스팸",
+           "본드 스팸", "Bluetooth Classic 페어링 요청 플러드"),
+}
+for _tag, _values in _CATALOG.items():
+    for _key, _value in zip(_CATALOG_KEYS, _values):
+        TRANSLATIONS[_tag][_key] = _value
+CORE_KEYS += _CATALOG_KEYS
+
+# Vendor label for the OUI lookup in scan results.
+_VENDOR = {
+    "fr": "Fabricant", "es": "Fabricante", "de": "Hersteller", "it": "Produttore",
+    "pt": "Fabricante", "tr": "Üretici", "uk": "Виробник", "pl": "Producent",
+    "ar": "الشركة المصنعة", "hi": "निर्माता", "id": "Produsen", "zh": "厂商",
+    "ja": "メーカー", "ko": "제조사",
+}
+for _tag, _value in _VENDOR.items():
+    TRANSLATIONS[_tag]["oui_vendor"] = _value
+CORE_KEYS += ["oui_vendor"]

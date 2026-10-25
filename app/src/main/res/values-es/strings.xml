@@ -92,4 +92,21 @@
     <string name="settings_root_checking">Comprobando…</string>
     <string name="settings_root_yes">Root detectado</string>
     <string name="settings_root_no">Sin root</string>
+    <string name="consent_title">Solo uso educativo y autorizado</string>
+    <string name="consent_body">Dolphy Enhanced es una herramienta de investigación y educación para protocolos inalámbricos, NFC/RFID y emulación de hardware.
+
+Cada módulo se ofrece con fines educativos y para probar equipos que te pertenecen o que estás explícitamente autorizado a probar. Usar esta aplicación contra dispositivos o redes de terceros, para perturbarlos, interceptarlos o suplantarlos, es ilegal en la mayoría de los países.
+
+Los autores y colaboradores no asumen ninguna responsabilidad por el mal uso. Al continuar confirmas ser mayor de edad, usar la aplicación solo en sistemas que puedes probar y aceptar estas condiciones.</string>
+    <string name="consent_note">Nada sale de tu dispositivo: sin cuenta, sin analítica, sin seguimiento.</string>
+    <string name="consent_accept">He leído y acepto</string>
+    <string name="consent_exit">Salir</string>
+    <string name="settings_consent_row">Condiciones de uso</string>
+    <string name="functions_search_hint">Buscar una función</string>
+    <string name="ir_flipper_extra_tv">televisores</string>
+    <string name="ble_spam_title">Spam BLE</string>
+    <string name="ble_spam_desc">Spam de solicitudes de emparejamiento de Apple, Android, Windows y Samsung</string>
+    <string name="bond_spam_title">Spam Bond</string>
+    <string name="bond_spam_desc">Inundación de solicitudes de emparejamiento Bluetooth Classic</string>
+    <string name="oui_vendor">Fabricante</string>
 </resources>

@@ -16,8 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.droid.dolphy.R
+import com.droid.dolphy.network.OuiDatabase
 
 @Composable
 fun NrfDeviceCard(
@@ -28,6 +32,8 @@ fun NrfDeviceCard(
 ) {
     var expanded by remember { mutableStateOf(false) }
     var connectionState by remember { mutableStateOf<ConnectionState?>(null) }
+    val context = LocalContext.current
+    val vendor = remember(device.address) { OuiDatabase.vendor(context, device.address) }
     val colorScheme = MaterialTheme.colorScheme
 
     val (iconColor, icon) = when (device.type) {
@@ -156,6 +162,14 @@ fun NrfDeviceCard(
                         icon = Icons.Filled.ContentCopy,
                         valueColor = Color.White
                     )
+
+                    if (vendor != null) {
+                        DetailRow(
+                            label = stringResource(R.string.oui_vendor),
+                            value = vendor,
+                            valueColor = Color.White
+                        )
+                    }
 
 
                     DetailRow(

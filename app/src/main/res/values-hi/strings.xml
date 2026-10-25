@@ -92,4 +92,21 @@
     <string name="settings_root_checking">जाँच हो रही है…</string>
     <string name="settings_root_yes">रूट मिला</string>
     <string name="settings_root_no">रूट नहीं है</string>
+    <string name="consent_title">केवल शैक्षणिक और अधिकृत उपयोग</string>
+    <string name="consent_body">Dolphy Enhanced एक शोध और शिक्षा उपकरण है जो वायरलेस प्रोटोकॉल, NFC/RFID और हार्डवेयर एमुलेशन के लिए है।
+
+प्रत्येक मॉड्यूल शैक्षणिक उद्देश्यों और उन उपकरणों के परीक्षण के लिए है जिनके मालिक हैं या जिनका परीक्षण करने की स्पष्ट अनुमति है। किसी तीसरे पक्ष के उपकरणों या नेटवर्क पर इस ऐप का उपयोग उन्हें बाधित करने, रोकने या नकल करने के लिए अधिकांश देशों में गैरकानूनी है।
+
+लेखक और योगदानकर्ता दुरुपयोग के लिए कोई ज़िम्मेदारी स्वीकार नहीं करते। जारी रखकर आप पुष्टि करते हैं कि आप वयस्क हैं, इस ऐप का उपयोग केवल उन सिस्टमों पर करेंगे जिनका परीक्षण करने की अनुमति है, और इन शर्तों से सहमत हैं।</string>
+    <string name="consent_note">आपका डिवाइस कुछ नहीं भेजता: न कोई अकाउंट, न एनालिटिक्स, न ट्रैकिंग।</string>
+    <string name="consent_accept">मैंने पढ़ा और सहमत हूँ</string>
+    <string name="consent_exit">बाहर निकलें</string>
+    <string name="settings_consent_row">उपयोग की शर्तें</string>
+    <string name="functions_search_hint">फ़ंक्शन खोजें</string>
+    <string name="ir_flipper_extra_tv">टीवी</string>
+    <string name="ble_spam_title">BLE स्पैम</string>
+    <string name="ble_spam_desc">Apple, Android, Windows और Samsung के पेयरिंग अनुरोध स्पैम</string>
+    <string name="bond_spam_title">बॉन्ड स्पैम</string>
+    <string name="bond_spam_desc">Bluetooth Classic पेयरिंग फ्लड</string>
+    <string name="oui_vendor">निर्माता</string>
 </resources>

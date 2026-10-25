@@ -92,4 +92,21 @@
     <string name="settings_root_checking">확인 중…</string>
     <string name="settings_root_yes">루트 감지됨</string>
     <string name="settings_root_no">루트 없음</string>
+    <string name="consent_title">교육 및 허가된 사용 전용</string>
+    <string name="consent_body">Dolphy Enhanced는 무선 프로토콜, NFC/RFID, 하드웨어 에뮬레이션을 위한 연구·교육 도구입니다.
+
+모든 모듈은 교육 목적과 소유했거나 명시적으로 테스트 허가를 받은 장비의 테스트를 위해 제공됩니다. 타인의 기기나 네트워크를 방해하거나 가로채거나 위장하는 용도로 이 앱을 사용하는 것은 대부분의 국가에서 불법입니다.
+
+저자와 기여자는 오용에 대한 책임을 지지 않습니다. 계속하면 귀하는 성인이며, 테스트가 허용된 시스템에만 이 앱을 사용하고 이 조건에 동의함을 확인합니다.</string>
+    <string name="consent_note">기기에서 나가는 것은 없습니다: 계정 없음, 분석 없음, 추적 없음.</string>
+    <string name="consent_accept">읽었고 동의합니다</string>
+    <string name="consent_exit">종료</string>
+    <string name="settings_consent_row">이용 약관</string>
+    <string name="functions_search_hint">기능 검색</string>
+    <string name="ir_flipper_extra_tv">TV</string>
+    <string name="ble_spam_title">BLE 스팸</string>
+    <string name="ble_spam_desc">Apple, Android, Windows, Samsung 페어링 요청 스팸</string>
+    <string name="bond_spam_title">본드 스팸</string>
+    <string name="bond_spam_desc">Bluetooth Classic 페어링 요청 플러드</string>
+    <string name="oui_vendor">제조사</string>
 </resources>

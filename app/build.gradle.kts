@@ -1,3 +1,5 @@
+import java.util.Properties
+
 import java.net.URI
 import java.io.InputStream
 import java.io.OutputStream
@@ -13,6 +15,17 @@ plugins {
 
 
 
+// Release signing is read from keystore.properties (gitignored). When the file is
+// absent — CI, a fresh clone — the release build falls back to the debug key so
+// that `assembleRelease` still works for testing.
+val keystorePropsFile = rootProject.file("keystore.properties")
+val keystoreProps = Properties().apply {
+    if (keystorePropsFile.exists()) {
+        // Read as UTF-8: the default Properties decoding mangles non-ASCII paths.
+        keystorePropsFile.inputStream().reader(Charsets.UTF_8).use { load(it) }
+    }
+}
+
 android {
     namespace = "com.droid.dolphy"
     compileSdk = 36
@@ -21,8 +34,8 @@ android {
         applicationId = "com.droid.dolphy"
         minSdk = 26
         targetSdk = 36
-        versionCode = 27
-        versionName = "2.7-enhanced"
+        versionCode = 28
+        versionName = "2.8-enhanced"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -35,6 +48,17 @@ android {
 
     }
 
+
+    signingConfigs {
+        if (keystorePropsFile.exists()) {
+            create("release") {
+                storeFile = file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
 
     buildTypes {
         debug {
@@ -49,7 +73,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isProfileable = false
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (keystorePropsFile.exists()) signingConfigs.getByName("release")
+            else signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

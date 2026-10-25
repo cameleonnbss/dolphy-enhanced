@@ -92,4 +92,21 @@
     <string name="settings_root_checking">Denetleniyor…</string>
     <string name="settings_root_yes">Root algılandı</string>
     <string name="settings_root_no">Root yok</string>
+    <string name="consent_title">Yalnızca eğitim ve yetkili kullanım</string>
+    <string name="consent_body">Dolphy Enhanced, kablosuz protokoller, NFC/RFID ve donanım emülasyonu için bir araştırma ve eğitim aracıdır.
+
+Her modül eğitim amaçlı ve sahibi olduğunuz ya da test etmeye açıkça yetkili olduğunuz ekipmanları test etmek için sunulmuştur. Bu uygulamayı üçüncü taraf cihazlara veya ağlara karşı kullanmak, onları bozmak, yakalamak veya taklit etmek çoğu ülkede yasa dışıdır.
+
+Yazarlar ve katkıcılar kötüye kullanımdan sorumlu tutulamaz. Devam ederek reşit olduğunuzu, uygulamayı yalnızca test etme yetkisine sahip olduğunuz sistemlerde kullanacağınızı ve bu koşulları kabul ettiğinizi onaylarsınız.</string>
+    <string name="consent_note">Cihazınızdan hiçbir şey çıkmaz: hesap yok, analitik yok, takip yok.</string>
+    <string name="consent_accept">Okudum ve kabul ediyorum</string>
+    <string name="consent_exit">Çıkış</string>
+    <string name="settings_consent_row">Kullanım koşulları</string>
+    <string name="functions_search_hint">İşlev ara</string>
+    <string name="ir_flipper_extra_tv">televizyonlar</string>
+    <string name="ble_spam_title">BLE Spam</string>
+    <string name="ble_spam_desc">Apple, Android, Windows ve Samsung için eşleştirme isteği spamı</string>
+    <string name="bond_spam_title">Bond Spam</string>
+    <string name="bond_spam_desc">Bluetooth Classic eşleştirme isteği seli</string>
+    <string name="oui_vendor">Üretici</string>
 </resources>

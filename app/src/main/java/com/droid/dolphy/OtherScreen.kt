@@ -14,11 +14,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,11 +73,27 @@ fun OtherScreen(navController: NavController, spamViewModel: SpamViewModel) {
 
     var menuExpandedKey by remember { mutableStateOf<String?>(null) }
     var infoDialogDestination by remember { mutableStateOf<FunctionDestination?>(null) }
+    var functionsQuery by rememberSaveable { mutableStateOf("") }
 
     val flipperFontFamily = remember { FontFamily(Font(R.font.born2b_sporty_v2)) }
 
     val allDestinations = remember(currentSections) {
         currentSections.flatMap { it.second }.distinctBy { it.route }
+    }
+
+    /** Filtered view of the sections, used only for rendering. */
+    val visibleSections = remember(currentSections, functionsQuery) {
+        val q = functionsQuery.trim().lowercase()
+        if (q.isEmpty()) {
+            currentSections
+        } else {
+            currentSections.mapNotNull { (section, list) ->
+                val matches = list.filter {
+                    it.title.lowercase().contains(q) || it.description.lowercase().contains(q)
+                }
+                if (matches.isEmpty()) null else section to matches
+            }
+        }
     }
 
     val pinnedCards = remember(allDestinations, pinnedRoutes) {
@@ -332,7 +351,11 @@ fun OtherScreen(navController: NavController, spamViewModel: SpamViewModel) {
                             }
                         }
 
-                        currentSections.forEach { (section, destinations) ->
+                        item(key = "functions_search") {
+                            FunctionSearchField(query = functionsQuery, onQueryChange = { functionsQuery = it })
+                        }
+
+                        visibleSections.forEach { (section, destinations) ->
                             item(key = "sec_header_$section") {
                                 Box(
                                     modifier = Modifier
@@ -577,7 +600,11 @@ fun OtherScreen(navController: NavController, spamViewModel: SpamViewModel) {
                             }
                         }
 
-                        currentSections.forEach { (section, destinations) ->
+                        item(key = "functions_search") {
+                        FunctionSearchField(query = functionsQuery, onQueryChange = { functionsQuery = it })
+                    }
+
+                    visibleSections.forEach { (section, destinations) ->
                             item(
                                 key = "sec_header_$section",
                                 span = { GridItemSpan(maxLineSpan) }
@@ -692,7 +719,11 @@ fun OtherScreen(navController: NavController, spamViewModel: SpamViewModel) {
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(top = 24.dp, bottom = 120.dp),
                 ) {
-                    currentSections.forEach { (section, destinations) ->
+                    item(key = "functions_search") {
+                        FunctionSearchField(query = functionsQuery, onQueryChange = { functionsQuery = it })
+                    }
+
+                    visibleSections.forEach { (section, destinations) ->
                         item(
                             key = "header_$section",
                             span = { GridItemSpan(maxLineSpan) }
@@ -803,7 +834,11 @@ fun OtherScreen(navController: NavController, spamViewModel: SpamViewModel) {
                     verticalArrangement = Arrangement.spacedBy(M3SegmentedListItemSpacing),
                     contentPadding = PaddingValues(top = 24.dp, bottom = 120.dp),
                 ) {
-                    currentSections.forEach { (section, destinations) ->
+                    item(key = "functions_search") {
+                        FunctionSearchField(query = functionsQuery, onQueryChange = { functionsQuery = it })
+                    }
+
+                    visibleSections.forEach { (section, destinations) ->
                         item(key = "header_$section") {
                             Box(
                                 modifier = Modifier
@@ -1244,4 +1279,34 @@ private fun RenderTileCard(
             }
         }
     }
+}
+
+/**
+ * Search field shown at the top of the Functions screen.
+ *
+ * Filters every section at once — a module you cannot remember the name of is
+ * usually reachable by typing what it does ("ir", "spam", "scan"…). Titles and
+ * descriptions are both matched, so this keeps working while the remaining
+ * hardcoded Russian labels are extracted to resources.
+ */
+@Composable
+private fun FunctionSearchField(query: String, onQueryChange: (String) -> Unit) {
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        singleLine = true,
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(stringResource(R.string.functions_search_hint)) },
+        leadingIcon = {
+            Icon(Icons.Default.Search, contentDescription = null)
+        },
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(onClick = { onQueryChange("") }) {
+                    Icon(Icons.Default.Close, contentDescription = null)
+                }
+            }
+        },
+        shape = RoundedCornerShape(16.dp),
+    )
 }

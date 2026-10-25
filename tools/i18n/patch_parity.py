@@ -115,6 +115,19 @@ EN_EXTRA = {
     "settings_root_checking": "Checking\u2026",
     "settings_root_yes": "Root detected",
     "settings_root_no": "Not rooted",
+    "consent_title": "Educational and authorized use only",
+    "consent_body": "Dolphy Enhanced is a research and education tool for wireless protocols, NFC/RFID and hardware emulation.\n\nEvery module is provided for educational purposes and for testing equipment you own or are explicitly authorised to test. Using this app against third-party devices or networks, to disrupt, intercept or impersonate them, is illegal in most countries.\n\nThe authors and contributors accept no responsibility for misuse. By continuing you confirm that you are of legal age, that you will only use this app on systems you are allowed to test, and that you accept these terms.",
+    "consent_note": "Nothing leaves your device: no account, no analytics, no tracking.",
+    "consent_accept": "I have read and I agree",
+    "consent_exit": "Exit",
+    "settings_consent_row": "Usage terms",
+    "functions_search_hint": "Search a function",
+    "ir_flipper_extra_tv": "TVs",
+    "ble_spam_title": "BLE Spam",
+    "ble_spam_desc": "Pairing-request spam for Apple, Android, Windows and Samsung",
+    "bond_spam_title": "Bond Spam",
+    "bond_spam_desc": "Bluetooth Classic pairing flood",
+    "oui_vendor": "Manufacturer",
 }
 
 # ---------------------------------------------------------------------------
@@ -160,6 +173,19 @@ RU_EXTRA = {
     "settings_root_checking": "Проверка\u2026",
     "settings_root_yes": "Root обнаружен",
     "settings_root_no": "Нет root",
+    "consent_title": "Только для обучения и на авторизованных устройствах",
+    "consent_body": "Dolphy Enhanced — исследовательский и образовательный инструмент для беспроводных протоколов, NFC/RFID и эмуляции оборудования.\n\nВсе модули предназначены для обучения и тестирования оборудования, которым вы владеете или на тестирование которого у вас есть явное разрешение. Использование приложения против чужих устройств и сетей, для их блокировки, перехвата или подмены, незаконно в большинстве стран.\n\nАвторы и участники не несут ответственности за неправомерное использование. Продолжая, вы подтверждаете, что достигли совершеннолетия, будете использовать приложение только на системах, тестирование которых вам разрешено, и принимаете эти условия.",
+    "consent_note": "Ничего не покидает ваше устройство: ни аккаунта, ни аналитики, ни отслеживания.",
+    "consent_accept": "Я прочитал и согласен",
+    "consent_exit": "Выход",
+    "settings_consent_row": "Условия использования",
+    "functions_search_hint": "Поиск функции",
+    "ir_flipper_extra_tv": "телевизоры",
+    "ble_spam_title": "BLE Спам",
+    "ble_spam_desc": "Спам запросами сопряжения Apple, Android, Windows и Samsung",
+    "bond_spam_title": "Bond Спам",
+    "bond_spam_desc": "Флуд запросами сопряжения Bluetooth Classic",
+    "oui_vendor": "Производитель",
 }
 
 

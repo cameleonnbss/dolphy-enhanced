@@ -92,4 +92,21 @@
     <string name="settings_root_checking">Memeriksa…</string>
     <string name="settings_root_yes">Root terdeteksi</string>
     <string name="settings_root_no">Tanpa root</string>
+    <string name="consent_title">Hanya untuk edukasi dan penggunaan resmi</string>
+    <string name="consent_body">Dolphy Enhanced adalah alat riset dan edukasi untuk protokol nirkabel, NFC/RFID, dan emulasi perangkat keras.
+
+Setiap modul disediakan untuk tujuan edukasi dan menguji perangkat yang kamu miliki atau yang secara eksplisit kamu izinkan mengujinya. Menggunakan aplikasi ini terhadap perangkat atau jaringan pihak lain, untuk mengganggu, mencegat, atau menirunya, adalah ilegal di sebagian besar negara.
+
+Penulis dan kontributor tidak bertanggung jawab atas penyalahgunaan. Dengan melanjutkan kamu mengonfirmasi bahwa kamu dewasa, akan menggunakan aplikasi ini hanya pada sistem yang boleh kamu uji, dan menerima ketentuan ini.</string>
+    <string name="consent_note">Tidak ada yang keluar dari perangkatmu: tanpa akun, tanpa analitik, tanpa pelacakan.</string>
+    <string name="consent_accept">Saya sudah membaca dan setuju</string>
+    <string name="consent_exit">Keluar</string>
+    <string name="settings_consent_row">Ketentuan penggunaan</string>
+    <string name="functions_search_hint">Cari fungsi</string>
+    <string name="ir_flipper_extra_tv">TV</string>
+    <string name="ble_spam_title">Spam BLE</string>
+    <string name="ble_spam_desc">Spam permintaan penyambungan Apple, Android, Windows, dan Samsung</string>
+    <string name="bond_spam_title">Spam Bond</string>
+    <string name="bond_spam_desc">Banjir permintaan penyambungan Bluetooth Classic</string>
+    <string name="oui_vendor">Produsen</string>
 </resources>

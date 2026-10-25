@@ -92,4 +92,21 @@
     <string name="settings_root_checking">確認中…</string>
     <string name="settings_root_yes">Root を検出</string>
     <string name="settings_root_no">Root なし</string>
+    <string name="consent_title">教育および許可された用途のみ</string>
+    <string name="consent_body">Dolphy Enhanced は無線プロトコル、NFC/RFID、ハードウェアエミュレーションのための研究・教育ツールです。
+
+各モジュールは教育目的、および所有または明示的に許可された機器のテストのために提供されます。第三者の機器やネットワークに対して、妨害・傍受・なりすましを行う用途は多くの国で違法です。
+
+作者と貢献者は悪用に対する責任を負いません。続行すると、あなたは成人であり、テストを許可されたシステムにのみ本アプリを使用し、これらの条件に同意したものとみなされます。</string>
+    <string name="consent_note">デバイスから何も送信されません：アカウントなし、解析なし、追跡なし。</string>
+    <string name="consent_accept">読んで同意しました</string>
+    <string name="consent_exit">終了</string>
+    <string name="settings_consent_row">利用条件</string>
+    <string name="functions_search_hint">機能を検索</string>
+    <string name="ir_flipper_extra_tv">テレビ</string>
+    <string name="ble_spam_title">BLE スパム</string>
+    <string name="ble_spam_desc">Apple・Android・Windows・Samsung へのペアリング要求スパム</string>
+    <string name="bond_spam_title">ボンド スパム</string>
+    <string name="bond_spam_desc">Bluetooth Classic ペアリング要求フラッド</string>
+    <string name="oui_vendor">メーカー</string>
 </resources>

@@ -1,8 +1,45 @@
-# Dolphy Enhanced — 2.7
+# Dolphy Enhanced — 2.8
 
-`versionCode 27` · `versionName 2.7-enhanced` · based on Dolphy 2.6 (GPL v3)
+`versionCode 28` · `versionName 2.8-enhanced` · based on Dolphy 2.6 (GPL v3)
 
-## Changelog
+## 2.8 additions
+
+### First-launch usage gate
+`UsageConsentScreen` shows before anything else on a fresh install: the app is a
+research and education tool, modules are for equipment you own or are explicitly
+authorised to test, and misuse is illegal. There is no "skip" — accepting stores
+`consent_accepted` in preferences, refusing closes the app. The text is
+translated in all 15 locales and can be re-read from Settings → About → Usage
+terms (which resets the flag, so the gate shows again on next launch).
+
+### Functions screen search
+The grid had no filter; with 40+ modules that was the worst navigation problem in
+the app. A search field now sits at the top of all three layout modes and filters
+by title **and** description, so "ir", "spam", "scan" or "nfc" narrow the list
+immediately. Drag-and-drop reordering still works because only the rendered copy
+is filtered — `currentSections` remains the source of truth.
+
+### New adaptive icon
+`ic_launcher_background.xml` (violet gradient) + `ic_launcher_foreground.xml` (a
+signal source emitting two arcs, teal) with a `<monochrome>` layer for Android 13
+themed icons. Vector, so it costs a few hundred bytes instead of five PNG sets.
+
+### OUI manufacturer database
+`assets/oui/manufacturers.json` — 335 curated IEEE prefixes covering the vendors
+that actually appear in BLE and Wi-Fi scans. `OuiDatabase` resolves the first
+three octets and the NRF scanner now shows a **Manufacturer** row under the MAC
+address instead of leaving the user to guess who made the radio.
+
+### Documentation and release hygiene
+- README translated into French, Spanish, German, Russian and Chinese
+  (`README-fr/es/de/ru/zh.md`), cross-linked.
+- `docs/MODULE-ROADMAP.md` — prioritised roadmap, plus the list of things that
+  will never be implemented and why.
+- Release signing: `keystore.properties` (gitignored) is read by
+  `app/build.gradle.kts`; without it the release build falls back to the debug
+  key so a fresh clone still builds.
+
+## 2.7 changelog
 
 ### Branding and attribution
 - App name is **Dolphy Enhanced** in the launcher and in Settings.

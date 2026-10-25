@@ -41,3 +41,27 @@
 
 -keep class com.chaquo.python.** { *; }
 -dontwarn com.chaquo.python.**
+
+# --- kotlinx.serialization ---------------------------------------------------
+# R8 in full mode strips the generated `Companion.serializer()` lookup, which
+# breaks every @Serializable model at runtime (cards.json, wordlist index,
+# plugin manifests). These are the rules from the library's own documentation.
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.**
+-keepclassmembers class kotlinx.serialization.json.** {
+    *** Companion;
+}
+-keepclasseswithmembers class kotlinx.serialization.json.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+-keep,includedescriptorclasses class com.droid.dolphy.**$$serializer { *; }
+-keepclassmembers class com.droid.dolphy.** {
+    *** Companion;
+}
+-keepclasseswithmembers class com.droid.dolphy.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+
+# --- Chaquopy ----------------------------------------------------------------
+-keep class com.chaquo.python.** { *; }
+-dontwarn com.chaquo.python.**
