@@ -1,3 +1,40 @@
+# Dolphy Enhanced — 3.0
+
+`versionCode 30` · `versionName 3.0-enhanced` · based on Dolphy 2.6 (GPL v3)
+
+## 3.0 additions
+
+### NFC card database: 37 → 90 entries
+`assets/nfc/cards.json`. Every entry carries the fields Android can actually
+report (ATQA, SAK, AID) plus memory size, security mechanism and a plain-language
+verdict on whether it clones and why.
+
+New families covered: MIFARE Classic Mini, Ultralight EV1, NTAG I2C, NTAG 424 DNA,
+DESFire Light, Plus S/X, ICODE SLIX2, Tag-it, FeliCa Lite-S; payment schemes
+(CB, Girocard, Discover, Bancontact, Elo, RuPay, Troy) and the tokenisation
+model behind Apple Pay / Google Pay / Samsung Pay; twelve transit systems
+(Navigo, Oyster, Octopus, Suica, Clipper, T-money, EZ-Link, Opal, myki, Troika,
+Charlie, OMNY); access control (iCLASS SE, Indala, AWID, Paradox, NEDAP, Salto,
+Onity, VingCard); 125 kHz industrial and animal chips (T5577, Hitag 2, Hitag S,
+ISO 11784/11785); identity documents (German eID, Estonian eID, Carte Vitale,
+CNIe); and the fun ones (Skylanders, LEGO Dimensions, EV charging, gym bands).
+
+The payment and transit entries exist to answer the question honestly: an EMV
+card cannot be copied to a phone because each payment needs a fresh cryptogram
+from the chip's secret key, and a transit pass is validated against a signed
+counter at the gate. Knowing that is more useful than a button that fails.
+
+### French: +169 strings
+The NFC, BLE and settings/about screens were English-only in every locale except
+Russian. They are now translated in `values-fr`, using typographic spacing and
+`+33` placeholders instead of the Russian `+7`.
+
+### Repository
+`README.md` plus `README.fr.md`, `README.ru.md`, `README.es.md`, `README.de.md`.
+CI now installs the Android SDK without the broken setup action.
+
+---
+
 # Dolphy Enhanced — 2.9
 
 `versionCode 29` · `versionName 2.9-enhanced` · based on Dolphy 2.6 (GPL v3)

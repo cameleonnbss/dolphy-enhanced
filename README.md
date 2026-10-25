@@ -4,7 +4,7 @@ An enhanced fork of [Dolphy](https://github.com/unvoiddd/Dolphy-App) — an Andr
 multi-tool for wireless protocol research, NFC/RFID work and hardware emulation.
 No root required for most modules.
 
-**Enhanced by [camzzz](https://github.com/camzzz)** · original project by
+**Enhanced by [camzzz](https://github.com/cameleonnbss)** · original project by
 [unvoiddd](https://github.com/unvoiddd) · GNU GPL v3.
 
 > ⚠️ Use only on devices and networks you own or are explicitly authorised to
